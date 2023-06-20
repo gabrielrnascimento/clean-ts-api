@@ -6,6 +6,7 @@ module.exports = {
   rules: {
     semi: ['off'],
     '@typescript-eslint/semi': ['error', 'always'],
-    '@typescript-eslint/explicit-module-boundary-types': ['error', { allowArgumentsExplicitlyTypedAsAny: true }]
+    '@typescript-eslint/explicit-module-boundary-types': ['error', { allowArgumentsExplicitlyTypedAsAny: true }],
+    '@typescript-eslint/strict-boolean-expressions': 'off'
   }
 };
