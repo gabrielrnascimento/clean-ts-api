@@ -7,13 +7,26 @@ interface SutTypes {
   emailValidatorStub: EmailValidator
 }
 
-const makeSut = (): SutTypes => {
+const makeEmailValidator = (): EmailValidator => {
   class EmaiLValidatorStub implements EmailValidator {
     isValid (email: string): boolean {
       return true;
     }
   }
-  const emailValidatorStub = new EmaiLValidatorStub();
+  return new EmaiLValidatorStub();
+};
+
+const makeEmailValidatorWithError = (): EmailValidator => {
+  class EmaiLValidatorStub implements EmailValidator {
+    isValid (email: string): boolean {
+      throw new Error();
+    }
+  }
+  return new EmaiLValidatorStub();
+};
+
+const makeSut = (): SutTypes => {
+  const emailValidatorStub = makeEmailValidator();
   const sut = new SignUpController(emailValidatorStub);
   return {
     sut,
@@ -110,12 +123,7 @@ describe('SignUpController', () => {
   });
 
   test('should return 500 if EmailValidator throws', () => {
-    class EmaiLValidatorStub implements EmailValidator {
-      isValid (email: string): boolean {
-        throw new Error();
-      }
-    }
-    const emailValidatorStub = new EmaiLValidatorStub();
+    const emailValidatorStub = makeEmailValidatorWithError();
     const sut = new SignUpController(emailValidatorStub);
     const httpRequest = {
       body: {
