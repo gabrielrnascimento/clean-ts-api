@@ -1,6 +1,7 @@
-import { InvalidParamError, MissingParamError, ServerError } from '../../errors';
+import { InvalidParamError, MissingParamError } from '../../errors';
 import { type EmailValidator, type AccountModel, type AddAccount, type AddAccountModel } from './signup-protocols';
 import { SignUpController } from './signup';
+import { serverError } from '../../helpers/http-helper';
 
 const makeEmailValidator = (): EmailValidator => {
   class EmaiLValidatorStub implements EmailValidator {
@@ -177,8 +178,7 @@ describe('SignUpController', () => {
       }
     };
     const httpResponse = await sut.handle(httpRequest);
-    expect(httpResponse.statusCode).toBe(500);
-    expect(httpResponse.body).toEqual(new ServerError());
+    expect(httpResponse).toEqual(serverError(new Error()));
   });
 
   test('should return 500 if AddAccount throws', async () => {
@@ -195,8 +195,7 @@ describe('SignUpController', () => {
       }
     };
     const httpResponse = await sut.handle(httpRequest);
-    expect(httpResponse.statusCode).toBe(500);
-    expect(httpResponse.body).toEqual(new ServerError());
+    expect(httpResponse).toEqual(serverError(new Error()));
   });
 
   test('should return 200 if valid data is provided', async () => {
