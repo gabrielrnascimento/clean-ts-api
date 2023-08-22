@@ -3,12 +3,12 @@ import { type EmailValidator } from '../../protocols';
 import { InvalidParamError } from '../../errors';
 
 const makeEmailValidator = (): EmailValidator => {
-  class EmaiLValidatorStub implements EmailValidator {
-    isValid (email: string): boolean {
+  class EmailValidatorStub implements EmailValidator {
+    isValid (): boolean {
       return true;
     }
   }
-  return new EmaiLValidatorStub();
+  return new EmailValidatorStub();
 };
 
 interface SutTypes {
