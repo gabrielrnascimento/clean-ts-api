@@ -1,1 +1,1 @@
-export * from './log-controller/log-controller';
+export * from './log-controller/log-controller-decorator';
