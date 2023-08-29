@@ -4,7 +4,9 @@
   "description": "NodeJs REST API with Typescript, TDD, Clean Architecture and SOLID principles",
   "main": "index.js",
   "scripts": {
-    "start": "sucrase-node src/main/server.ts",
+    "start": "node dist/main/server.js",
+    "build": "rimraf dist && tsc",
+    "dev": "sucrase-node src/main/server.ts",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:watch": "npm test -- --watch",
@@ -31,6 +33,7 @@
     "husky": "^4.0.6",
     "jest": "^29.5.0",
     "lint-staged": "^11.1.2",
+    "rimraf": "^5.0.1",
     "sucrase": "^3.32.0",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.0",
@@ -40,7 +43,6 @@
   "dependencies": {
     "bcrypt": "^5.1.0",
     "express": "^4.18.2",
-    "fast-glob": "^3.2.12",
     "jsonwebtoken": "^9.0.1",
     "mongodb": "^5.6.0",
     "validator": "^13.9.0"
