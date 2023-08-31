@@ -1,6 +1,6 @@
 {
   "name": "clean-ts-api",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "NodeJs REST API with Typescript, TDD, Clean Architecture and SOLID principles",
   "main": "index.js",
   "scripts": {
