@@ -7,7 +7,7 @@
     "start": "node dist/main/server.js",
     "build": "rimraf dist && tsc",
     "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
-    "tsc:w": "tsc -w",
+    "tsc:w": "tsc -p tsconfig.prod.json -w ",
     "up": "npm run build && docker compose up -d",
     "down": "docker compose down",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
