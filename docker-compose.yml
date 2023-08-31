@@ -16,10 +16,12 @@ services:
     restart: always
     ports:
       - 5050:5050
+      - 9222:9222
     depends_on:
       - mongo
-    command: npm start
+    command: npm run debug
     volumes:
+      - ./package.json:/usr/src/app/package.json
       - ./dist:/usr/src/app/dist
     links:
       - mongo
