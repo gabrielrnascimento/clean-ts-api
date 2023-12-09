@@ -1,5 +1,5 @@
 import { DbAddAccount } from './db-add-account';
-import { type AddAccountRepository, type AccountModel, type AddAccountModel, type Hasher } from './db-add-account-protocols';
+import { type AddAccountRepository, type AccountModel, type AddAccountModel, type Hasher, type LoadAccountByEmailRepository } from './db-add-account-protocols';
 
 const makeHasher = (): Hasher => {
   class HasherStub implements Hasher {
@@ -8,6 +8,15 @@ const makeHasher = (): Hasher => {
     }
   }
   return new HasherStub(); ;
+};
+
+const makeLoadAccountByEmailRepository = (): LoadAccountByEmailRepository => {
+  class LoadAccountByEmailRepositoryStub implements LoadAccountByEmailRepository {
+    async loadByEmail (email: string): Promise<AccountModel> {
+      return makeFakeAccount();
+    }
+  }
+  return new LoadAccountByEmailRepositoryStub();
 };
 
 const makeAddAccountRepository = (): AddAccountRepository => {
@@ -36,16 +45,19 @@ interface SutTypes {
   sut: DbAddAccount
   hasherStub: Hasher
   addAccountRepositoryStub: AddAccountRepository
+  loadAccountByEmailRepositoryStub: LoadAccountByEmailRepository
 }
 
 const makeSut = (): SutTypes => {
+  const loadAccountByEmailRepositoryStub = makeLoadAccountByEmailRepository();
   const hasherStub = makeHasher();
   const addAccountRepositoryStub = makeAddAccountRepository();
-  const sut = new DbAddAccount(hasherStub, addAccountRepositoryStub);
+  const sut = new DbAddAccount(hasherStub, addAccountRepositoryStub, loadAccountByEmailRepositoryStub);
   return {
     sut,
     hasherStub,
-    addAccountRepositoryStub
+    addAccountRepositoryStub,
+    loadAccountByEmailRepositoryStub
   };
 };
 
@@ -91,5 +103,14 @@ describe('DbAddAccount', () => {
     };
     const account = await sut.add(accountData);
     expect(account).toEqual(makeFakeAccount());
+  });
+
+  test('should call LoadAccountByEmailRepository with correct email', async () => {
+    const { sut, loadAccountByEmailRepositoryStub } = makeSut();
+    const loadByEmail = jest.spyOn(loadAccountByEmailRepositoryStub, 'loadByEmail');
+
+    await sut.add(makeFakeAccountData());
+
+    expect(loadByEmail).toHaveBeenCalledWith('valid_email@mail.com');
   });
 });
