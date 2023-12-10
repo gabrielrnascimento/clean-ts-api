@@ -1,3 +1,4 @@
+import { badRequest } from '../../access/signup/signup-controller-protocols';
 import { type HttpResponse, type Controller, type HttpRequest, type Validation } from './add-survey-controller-protocols';
 
 export class AddSurveyController implements Controller {
@@ -6,7 +7,8 @@ export class AddSurveyController implements Controller {
   ) { }
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    this.validation.validate(httpRequest.body);
+    const error = this.validation.validate(httpRequest.body);
+    if (error) return badRequest(error);
     return null;
   }
 }
