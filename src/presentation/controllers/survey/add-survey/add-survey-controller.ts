@@ -1,4 +1,4 @@
-import { badRequest, serverError } from '../../access/signup/signup-controller-protocols';
+import { badRequest, noContent, serverError } from '../../access/signup/signup-controller-protocols';
 import { type HttpResponse, type Controller, type HttpRequest, type Validation, type AddSurvey } from './add-survey-controller-protocols';
 
 export class AddSurveyController implements Controller {
@@ -17,7 +17,7 @@ export class AddSurveyController implements Controller {
         question,
         answers
       });
-      return null;
+      return noContent();
     } catch (error) {
       return serverError(error);
     }
