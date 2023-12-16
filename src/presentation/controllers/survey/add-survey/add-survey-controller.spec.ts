@@ -1,5 +1,4 @@
-import { type Validation, type HttpRequest, type AddSurvey, type AddSurveyModel } from './add-survey-controller-protocols';
-import { badRequest, noContent, serverError } from '../../access/signup/signup-controller-protocols';
+import { type Validation, type HttpRequest, type AddSurvey, type AddSurveyModel, badRequest, noContent, serverError } from './add-survey-controller-protocols';
 import { AddSurveyController } from './add-survey-controller';
 import MockDate from 'mockdate';
 
