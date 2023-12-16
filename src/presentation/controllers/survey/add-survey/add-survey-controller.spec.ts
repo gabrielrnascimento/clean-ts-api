@@ -1,6 +1,6 @@
-import { type Validation, type HttpRequest, type AddSurvey, type AddSurveyModel } from './add-survey-controller-protocols';
-import { badRequest, noContent, serverError } from '../../access/signup/signup-controller-protocols';
+import { type Validation, type HttpRequest, type AddSurvey, type AddSurveyModel, badRequest, noContent, serverError } from './add-survey-controller-protocols';
 import { AddSurveyController } from './add-survey-controller';
+import MockDate from 'mockdate';
 
 const makeFakeRequest = (): HttpRequest => ({
   body: {
@@ -8,7 +8,8 @@ const makeFakeRequest = (): HttpRequest => ({
     answers: [{
       image: 'any_image',
       answer: 'any_answer'
-    }]
+    }],
+    date: new Date()
   }
 });
 
@@ -48,6 +49,14 @@ const makeSut = (): SutTypes => {
 };
 
 describe('AddSurveyController', () => {
+  beforeAll(() => {
+    MockDate.set(new Date());
+  });
+
+  afterAll(() => {
+    MockDate.reset();
+  });
+
   test('should call Validation with correct values', async () => {
     const { sut, validationStub } = makeSut();
     const validateSpy = jest.spyOn(validationStub, 'validate');

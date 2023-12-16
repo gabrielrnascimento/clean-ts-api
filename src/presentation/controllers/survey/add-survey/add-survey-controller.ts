@@ -1,5 +1,4 @@
-import { badRequest, noContent, serverError } from '../../access/signup/signup-controller-protocols';
-import { type HttpResponse, type Controller, type HttpRequest, type Validation, type AddSurvey } from './add-survey-controller-protocols';
+import { type HttpResponse, type Controller, type HttpRequest, type Validation, type AddSurvey, badRequest, noContent, serverError } from './add-survey-controller-protocols';
 
 export class AddSurveyController implements Controller {
   constructor (
@@ -15,7 +14,8 @@ export class AddSurveyController implements Controller {
       const { question, answers } = httpRequest.body;
       await this.addSurvey.add({
         question,
-        answers
+        answers,
+        date: new Date()
       });
       return noContent();
     } catch (error) {
