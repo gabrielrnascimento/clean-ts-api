@@ -31,6 +31,45 @@ describe('Survey Routes', () => {
         .get('/api/surveys')
         .expect(403);
     });
+
+    test('should return 200 on load surveys with valid accessToken', async () => {
+      const res = await accountCollection.insertOne({
+        name: 'Gabriel',
+        email: 'gabriel.nascimento@email.com',
+        password: '123'
+      });
+
+      const id = res.insertedId;
+      const accessToken = sign({ id }, env.jwtSecret);
+      await accountCollection.updateOne({
+        _id: id
+      }, {
+        $set: {
+          accessToken
+        }
+      });
+
+      await surveyCollection.insertMany([
+        {
+          question: 'Question 1',
+          answers: [
+            {
+              image: 'http://image-name.com',
+              answer: 'Answer 1'
+            },
+            {
+              answer: 'Answer 2'
+            }
+          ],
+          date: new Date()
+        }
+      ]);
+
+      await request(app)
+        .get('/api/surveys')
+        .set('x-access-token', accessToken)
+        .expect(200);
+    });
   });
 
   describe('POST /surveys', () => {
