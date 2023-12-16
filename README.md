@@ -1,5 +1,7 @@
 # **Clean Node API**
 
+[![Build Status](https://app.travis-ci.com/gabrielrnascimento/clean-ts-api.svg?branch=main)](https://app.travis-ci.com/gabrielrnascimento/clean-ts-api) [![Coverage Status](https://coveralls.io/repos/github/gabrielrnascimento/clean-ts-api/badge.svg?branch=)](https://coveralls.io/github/gabrielrnascimento/clean-ts-api?branch=)
+
 ---
 
 ## [**Link para o curso completo**](https://www.udemy.com/course/tdd-com-mango/?referralCode=B53CE5CA2B9AFA5A6FA1)
