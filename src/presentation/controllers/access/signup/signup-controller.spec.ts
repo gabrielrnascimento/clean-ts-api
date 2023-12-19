@@ -44,12 +44,12 @@ const makeFakeAccount = (): AccountModel => ({
   password: 'valid_password'
 });
 
-interface SutTypes {
+type SutTypes = {
   sut: SignUpController
   addAccountStub: AddAccount
   validationStub: Validation
   authenticationStub: Authentication
-}
+};
 
 const makeSut = (): SutTypes => {
   const addAccountStub = makeAddAccount();
