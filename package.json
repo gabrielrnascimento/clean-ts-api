@@ -1,6 +1,6 @@
 {
   "name": "clean-ts-api",
-  "version": "1.4.1",
+  "version": "2.0.0",
   "description": "NodeJs REST API with Typescript, TDD, Clean Architecture and SOLID principles",
   "main": "index.js",
   "scripts": {
@@ -49,12 +49,8 @@
     "bcrypt": "^5.1.0",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.1",
-    "module-alias": "^2.2.3",
     "mongodb": "^5.6.0",
     "nodemon": "^3.0.1",
     "validator": "^13.9.0"
-  },
-  "_moduleAliases": {
-    "@": "dist"
   }
 }
