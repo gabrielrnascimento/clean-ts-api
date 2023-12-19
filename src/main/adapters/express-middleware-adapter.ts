@@ -1,5 +1,5 @@
+import { type HttpRequest, type Middleware } from '@/presentation/protocols';
 import { type NextFunction, type Request, type Response } from 'express';
-import { type HttpRequest, type Middleware } from '../../presentation/protocols';
 
 export const adaptMiddleware = (middleware: Middleware) => {
   return async (req: Request, res: Response, next: NextFunction): Promise<void> => {

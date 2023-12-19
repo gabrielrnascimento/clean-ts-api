@@ -1,7 +1,7 @@
 /* istanbul ignore next */
-export * from '../../../protocols';
-export * from '../../../../domain/models/account';
-export * from '../../../../domain/usecases/add-account';
-export * from '../../../../domain/usecases/authentication';
-export * from '../../../errors';
-export * from '../../../helpers/http/http-helper';
+export * from '@/domain/models/account';
+export * from '@/domain/usecases/add-account';
+export * from '@/domain/usecases/authentication';
+export * from '@/presentation/protocols';
+export * from '@/presentation/errors';
+export * from '@/presentation/helpers/http/http-helper';
