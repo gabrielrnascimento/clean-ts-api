@@ -8,7 +8,6 @@ export default (app: Express): void => {
   readdirSync(path.join(__dirname, '../routes')).map(async file => {
     if (!file.includes('.test.') && !file.endsWith('.map')) {
       (await import(`../routes/${file}`)).default(router);
-      console.log(file);
     }
   });
 };
