@@ -1,7 +1,7 @@
 import Joi, { type ObjectSchema, ValidationError } from 'joi';
 import { SchemaJoiAdapter } from './schema-joi-adapter';
 
-jest.mock('Joi', () => ({
+jest.mock('joi', () => ({
   object (): any {
     return {
       validate (value: any): any {
