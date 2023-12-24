@@ -1,4 +1,4 @@
-import { type HttpResponse, type Controller, type HttpRequest, type LoadSurveyById, forbidden, InvalidParamError, serverError, type SaveSurveyResult } from './save-survey-result-controller-protocols';
+import { type HttpResponse, type Controller, type HttpRequest, type LoadSurveyById, forbidden, InvalidParamError, serverError, type SaveSurveyResult, ok } from './save-survey-result-controller-protocols';
 
 export class SaveSurveyResultController implements Controller {
   constructor (
@@ -20,12 +20,14 @@ export class SaveSurveyResultController implements Controller {
       const answers = survey.answers.map(answer => answer.answer);
       if (!answers.includes(answer)) return forbidden(new InvalidParamError('answer'));
 
-      await this.saveSurveyResult.save({
+      const surveyResult = await this.saveSurveyResult.save({
         surveyId,
         accountId,
         answer,
         date: new Date()
       });
+
+      return ok(surveyResult);
     } catch (error) {
       return serverError(error);
     }
