@@ -1,4 +1,4 @@
-import { type Collection, MongoClient } from 'mongodb';
+import { type Collection, MongoClient, ObjectId } from 'mongodb';
 
 export const MongoHelper = {
   client: null as unknown as MongoClient,
@@ -26,5 +26,9 @@ export const MongoHelper = {
 
   mapArray (collection: any[]): any[] {
     return collection.map(c => MongoHelper.map(c));
+  },
+
+  convertToObjectId (id: string): ObjectId {
+    return new ObjectId(id);
   }
 };
