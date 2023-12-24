@@ -1,4 +1,4 @@
-import { type Collection, MongoClient, ObjectId } from 'mongodb';
+import { type Collection, MongoClient, ObjectId, type InsertOneResult } from 'mongodb';
 
 export const MongoHelper = {
   client: null as unknown as MongoClient,
@@ -26,6 +26,10 @@ export const MongoHelper = {
 
   mapArray (collection: any[]): any[] {
     return collection.map(c => MongoHelper.map(c));
+  },
+
+  formatInsertedDocument (result: InsertOneResult<Document>, data: any): any {
+    return Object.assign({}, data, { id: result.insertedId });
   },
 
   convertToObjectId (id: string): ObjectId {
