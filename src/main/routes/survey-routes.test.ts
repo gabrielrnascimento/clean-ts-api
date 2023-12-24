@@ -89,6 +89,23 @@ describe('Survey Routes', () => {
   });
 
   describe('POST /surveys', () => {
+    test('should return 400 on add survey if invalid body is provided', async () => {
+      const accessToken = await makeAccessToken();
+
+      await request(app)
+        .post('/api/surveys')
+        .set('x-access-token', accessToken)
+        .send({
+          question: 'Question',
+          answers:
+            {
+              image: 'http://image-name.com',
+              answer: 'Answer 1'
+            }
+        })
+        .expect(400);
+    });
+
     test('should return 403 on add survey without accessToken', async () => {
       await request(app)
         .post('/api/surveys')
