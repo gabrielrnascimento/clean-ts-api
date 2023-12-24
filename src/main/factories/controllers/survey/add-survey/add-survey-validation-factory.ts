@@ -1,11 +1,26 @@
-import { ValidationComposite } from '@/validation/validators';
+import { RequiredFieldValidation, ValidationComposite } from '@/validation/validators';
 import { type Validation } from '@/presentation/protocols/validation';
-import { makeAddSurveySchemaValidation } from '@/main/factories/validations/add-survey/schema-validation';
-import { makeAddSurveyRequiredFieldValidation } from '@/main/factories/validations/add-survey/required-field-validation';
+import Joi from 'joi';
+import { type SurveyModel } from '@/domain/models/survey';
+import { SchemaJoiAdapter } from '@/infra/validators/schema-joi-adapter';
+import { SchemaValidation } from '@/validation/validators/schema-validation';
 
 export const makeAddSurveyValidation = (): ValidationComposite => {
   const validations: Validation[] = [];
-  validations.push(...makeAddSurveyRequiredFieldValidation());
-  validations.push(makeAddSurveySchemaValidation());
+  for (const field of ['question', 'answers']) {
+    validations.push(new RequiredFieldValidation(field));
+  }
+
+  const schema = Joi.object<SurveyModel>({
+    question: Joi.string().required(),
+    answers: Joi.array().items(
+      Joi.object({
+        image: Joi.string().optional(),
+        answer: Joi.string().required()
+      })).required()
+  });
+  const schemaValidator = new SchemaJoiAdapter(schema);
+  validations.push(new SchemaValidation(schemaValidator));
+
   return new ValidationComposite(validations);
 };
