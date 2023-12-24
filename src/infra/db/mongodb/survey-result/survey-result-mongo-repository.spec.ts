@@ -52,7 +52,7 @@ describe('SurveyResultMongoRepository', () => {
   beforeEach(async () => {
     surveyCollection = await MongoHelper.getCollection('surveys');
     await surveyCollection.deleteMany({});
-    surveyResultCollection = await MongoHelper.getCollection('surveysResults');
+    surveyResultCollection = await MongoHelper.getCollection('surveyResults');
     await surveyResultCollection.deleteMany({});
     accountCollection = await MongoHelper.getCollection('accounts');
     await accountCollection.deleteMany({});
