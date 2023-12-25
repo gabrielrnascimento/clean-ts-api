@@ -17,7 +17,8 @@ export const makeAddSurveyValidation = (): ValidationComposite => {
       Joi.object({
         image: Joi.string().optional(),
         answer: Joi.string().required()
-      })).required()
+      }))
+      .required()
   });
   const schemaValidator = new SchemaJoiAdapter(schema);
   validations.push(new SchemaValidation(schemaValidator));
