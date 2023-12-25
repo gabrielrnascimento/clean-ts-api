@@ -1,4 +1,4 @@
-import { mockAccountModel, mockAuthenticationParams, throwError } from '@/domain/test';
+import { mockAuthenticationParams, throwError } from '@/domain/test';
 import { DbAuthentication } from './db-authentication';
 import {
   type LoadAccountByEmailRepository,
@@ -17,7 +17,7 @@ type SutTypes = {
 };
 
 const makeSut = (): SutTypes => {
-  const loadAccountByEmailRepositoryStub = mockLoadAccountByEmailRepository(mockAccountModel());
+  const loadAccountByEmailRepositoryStub = mockLoadAccountByEmailRepository();
   const hashComparerStub = mockHashComparer();
   const EncrypterStub = mockEncrypter();
   const updateAccessTokenRepositoryStub = mockUpdateAccessTokenRepository();

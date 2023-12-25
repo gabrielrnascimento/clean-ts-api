@@ -13,10 +13,10 @@ export const mockAddAccountRepository = (): AddAccountRepository => {
   return new AddAccountRepositoryStub(); ;
 };
 
-export const mockLoadAccountByEmailRepository = (returnData?: AccountModel): LoadAccountByEmailRepository => {
+export const mockLoadAccountByEmailRepository = (): LoadAccountByEmailRepository => {
   class LoadAccountByEmailRepositoryStub implements LoadAccountByEmailRepository {
     async loadByEmail (email: string): Promise<AccountModel> {
-      return returnData;
+      return mockAccountModel();
     }
   }
   return new LoadAccountByEmailRepositoryStub();
