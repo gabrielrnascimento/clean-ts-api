@@ -8,7 +8,7 @@ import { type Controller, type HttpRequest, type HttpResponse } from '@/presenta
 const makeController = (): Controller => {
   class ControllerStub implements Controller {
     async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-      return await new Promise(resolve => { resolve(ok(mockAccountModel())); });
+      return await Promise.resolve(ok(mockAccountModel()));
     }
   }
   return new ControllerStub();
@@ -62,7 +62,7 @@ describe('LogControllerDecorator', () => {
 
   test('should call LogErrorRepository with correct error if controller returns 500', async () => {
     const { sut, controllerStub, logErrorRepositoryStub } = makeSut();
-    jest.spyOn(controllerStub, 'handle').mockReturnValueOnce(new Promise(resolve => { resolve(mockServerError()); }));
+    jest.spyOn(controllerStub, 'handle').mockReturnValueOnce(Promise.resolve(mockServerError()));
     const logErrorSpy = jest.spyOn(logErrorRepositoryStub, 'logError');
     await sut.handle(mockRequest());
     expect(logErrorSpy).toHaveBeenCalledWith('any_stack');
