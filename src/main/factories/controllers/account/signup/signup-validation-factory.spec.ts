@@ -2,15 +2,7 @@ import { makeSignUpValidation } from './signup-validation-factory';
 import { RequiredFieldValidation, CompareFieldsValidation, EmailValidation, ValidationComposite } from '@/validation/validators';
 import { type Validation } from '@/presentation/protocols/validation';
 import { type EmailValidator } from '@/validation/protocols';
-
-const makeValidationStub = (): Validation => {
-  class ValidationStub implements Validation {
-    validate (input: any): Error {
-      return null;
-    }
-  }
-  return new ValidationStub();
-};
+import { mockValidation } from '@/presentation/test';
 
 const makeEmailValidator = (): EmailValidator => {
   class EmaiLValidatorStub implements EmailValidator {
@@ -25,13 +17,13 @@ jest.mock('@/validation/validators/validation-composite');
 
 jest.mock('@/validation/validators/required-field-validation', () => ({
   RequiredFieldValidation: jest.fn().mockImplementation(() => {
-    return makeValidationStub();
+    return mockValidation();
   })
 }));
 
 jest.mock('@/validation/validators/email-validation', () => ({
   EmailValidation: jest.fn().mockImplementation(() => {
-    return makeValidationStub();
+    return mockValidation();
   })
 }));
 

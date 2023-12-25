@@ -12,6 +12,7 @@ module.exports = {
     'n/handle-callback-err': 'off',
     '@typescript-eslint/prefer-nullish-coalescing': 'off',
     '@typescript-eslint/no-unnecessary-type-assertion': 'off',
-    '@typescript-eslint/consistent-type-definitions': 'off'
+    '@typescript-eslint/consistent-type-definitions': 'off',
+    'newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }]
   }
 };

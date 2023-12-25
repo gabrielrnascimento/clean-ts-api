@@ -33,7 +33,7 @@ jest.mock('joi', () => ({
   }
 }));
 
-const makeJoiSchema = (): ObjectSchema => {
+const mockJoiSchema = (): ObjectSchema => {
   return Joi.object({
     any_field: Joi.string().required(),
     any_other_field: Joi.string().required()
@@ -46,7 +46,7 @@ type SutTypes = {
 };
 
 const makeSut = (): SutTypes => {
-  const joiSchemaStub = makeJoiSchema();
+  const joiSchemaStub = mockJoiSchema();
   const sut = new SchemaJoiAdapter(joiSchemaStub);
   return {
     sut,
