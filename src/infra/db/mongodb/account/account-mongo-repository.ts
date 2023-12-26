@@ -3,7 +3,7 @@ import { type UpdateAccessTokenRepository, type LoadAccountByEmailRepository } f
 import { type LoadAccountByTokenRepository } from '@/data/protocols/db/account/load-account-by-token-repository';
 import { type AccountModel } from '@/domain/models/account';
 import { type AddAccountParams } from '@/domain/usecases/account/add-account';
-import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper';
+import { MongoHelper } from '@/infra/db/mongodb/helpers';
 
 export class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository, LoadAccountByTokenRepository {
   async add (accountData: AddAccountParams): Promise<AccountModel> {

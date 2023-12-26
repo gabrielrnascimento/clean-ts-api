@@ -1,7 +1,7 @@
 import { SurveyResultMongoRepository } from './survey-result-mongo-repository';
 import { type AccountModel } from '@/domain/models/account';
 import { type SurveyModel } from '@/domain/models/survey';
-import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper';
+import { MongoHelper } from '@/infra/db/mongodb/helpers';
 import { ObjectId, type Collection } from 'mongodb';
 
 let surveyCollection: Collection;
