@@ -1,5 +1,5 @@
-export const serverError = {
-  description: 'Problema no servidor',
+export const badRequestComponent = {
+  description: 'Requisição inválida',
   content: {
     'application/json': {
       schema: {
