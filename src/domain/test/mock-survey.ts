@@ -14,11 +14,13 @@ export const mockAddSurveyParams = (): AddSurveyParams => ({
 
 export const mockSurveyModel = (): SurveyModel => {
   return {
-    id: 'any_id',
+    id: 'any_survey_id',
     question: 'any_question',
     answers: [{
       answer: 'any_answer',
       image: 'any_image'
+    }, {
+      answer: 'other_answer'
     }],
     date: new Date()
   };
