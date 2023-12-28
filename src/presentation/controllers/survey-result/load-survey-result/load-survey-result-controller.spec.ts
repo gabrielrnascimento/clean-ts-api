@@ -1,6 +1,7 @@
 import { LoadSurveyResultController } from './load-survey-result-controller';
 import { type LoadSurveyById, type HttpRequest, InvalidParamError, forbidden, serverError, type LoadSurveyResult, ok } from './load-survey-result-controller-protocols';
 import { mockLoadSurveyById, mockLoadSurveyResult, mockSurveyResultModel, throwError } from '@/domain/test';
+import MockDate from 'mockdate';
 
 const mockRequest = (): HttpRequest => ({
   params: {
@@ -26,6 +27,14 @@ const makeSut = (): SutTypes => {
 };
 
 describe('LoadSurveyResultController', () => {
+  beforeAll(() => {
+    MockDate.set(new Date());
+  });
+
+  afterAll(() => {
+    MockDate.reset();
+  });
+
   test('should call LoadSurveyById with correct values', async () => {
     const { sut, loadSurveyByIdStub } = makeSut();
     const loadSurveyByIdSpy = jest.spyOn(loadSurveyByIdStub, 'loadById');
