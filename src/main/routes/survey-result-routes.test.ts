@@ -1,5 +1,5 @@
 import app from '@/main/config/app';
-import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper';
+import { MongoHelper } from '@/infra/db/mongodb/helpers';
 import env from '@/main/config/env';
 import { type Collection } from 'mongodb';
 import { sign } from 'jsonwebtoken';
@@ -83,6 +83,38 @@ describe('Survey Routes', () => {
         .send({
           answer: 'Answer 1'
         })
+        .expect(200);
+    });
+  });
+
+  describe('GET /surveys/:survey_id/results ', () => {
+    test('should return 403 on LoadSurveyResult without accessToken', async () => {
+      await request(app)
+        .get('/api/surveys/any_id/results')
+        .expect(403);
+    });
+
+    test('should return 200 on LoadSurveyResult with accessToken', async () => {
+      const accessToken = await makeAccessToken();
+      const response = await surveyCollection.insertOne({
+        question: 'Question 1',
+        answers: [
+          {
+            image: 'http://image-name.com',
+            answer: 'Answer 1'
+          },
+          {
+            answer: 'Answer 2'
+          }
+        ],
+        date: new Date()
+      });
+
+      const surveyId = String(response.insertedId);
+
+      await request(app)
+        .get(`/api/surveys/${surveyId}/results`)
+        .set('x-access-token', accessToken)
         .expect(200);
     });
   });
