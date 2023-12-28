@@ -1,5 +1,5 @@
 
-import { mockSaveSurveyResultRepository } from '@/data/test/mock-db-survey-result';
+import { mockSaveSurveyResultRepository } from '@/data/test';
 import { DbSaveSurveyResult } from './db-save-survey-result';
 import { type SaveSurveyResultRepository } from './db-save-survey-result-protocols';
 import { mockSaveSurveyResultParams, mockSurveyResultModel } from '@/domain/test';
