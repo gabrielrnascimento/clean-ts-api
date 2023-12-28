@@ -113,6 +113,13 @@ describe('SurveyResultMongoRepository', () => {
   });
 
   describe('loadBySurveyId()', () => {
+    test('should return null if there is no survey result', async () => {
+      const survey = await mockSurvey();
+      const sut = makeSut();
+      const surveyResult = await sut.loadBySurveyId(survey.id);
+      expect(surveyResult).toBeNull();
+    });
+
     test('should load survey result', async () => {
       const survey = await mockSurvey();
       const account = await mockAccount();
