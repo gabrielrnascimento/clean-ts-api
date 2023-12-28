@@ -6,7 +6,7 @@ import { type SaveSurveyResultParams } from '@/domain/usecases/survey-result/sav
 import { type SaveSurveyResultRepository } from '@/data/protocols/db/survey-result/save-survey-result-repository';
 
 export class SurveyResultMongoRepository implements SaveSurveyResultRepository, LoadSurveyResultRepository {
-  async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
+  async save (data: SaveSurveyResultParams): Promise<void> {
     const surveyResultCollection = await MongoHelper.getCollection('surveyResults');
     await surveyResultCollection.findOneAndUpdate({
       surveyId: new ObjectId(data.surveyId),
@@ -19,9 +19,6 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository, 
     }, {
       upsert: true
     });
-
-    const surveyResult = await this.loadBySurveyId(data.surveyId);
-    return surveyResult;
   }
 
   async loadBySurveyId (surveyId: string): Promise<SurveyResultModel> {
