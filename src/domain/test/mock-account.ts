@@ -2,6 +2,7 @@ import { type AccountModel } from '@/domain/models/account';
 import { type AddAccount, type AddAccountParams } from '@/domain/usecases/account/add-account';
 import { type Authentication, type AuthenticationParams } from '@/domain/usecases/account/authentication';
 import { type LoadAccountByToken } from '@/domain/usecases/account/load-account-by-token';
+import { type AuthenticationModel } from '@/domain/models/authentication';
 
 export const mockAddAccountParams = (): AddAccountParams => ({
   name: 'any_name',
@@ -20,6 +21,11 @@ export const mockAuthenticationParams = (): AuthenticationParams => ({
   password: 'any_password'
 });
 
+export const mockAuthenticationModel = (): AuthenticationModel => ({
+  accessToken: 'any_token',
+  name: 'any_name'
+});
+
 export class AddAccountSpy implements AddAccount {
   public addAccountParams: AddAccountParams;
   public result: AccountModel = mockAccountModel();
@@ -32,9 +38,9 @@ export class AddAccountSpy implements AddAccount {
 
 export class AuthenticationSpy implements Authentication {
   public authenticationParams: AuthenticationParams;
-  public result: string = 'any_token';
+  public result: AuthenticationModel = mockAuthenticationModel();
 
-  async auth (authenticationParams: AuthenticationParams): Promise<string> {
+  async auth (authenticationParams: AuthenticationParams): Promise<AuthenticationModel> {
     this.authenticationParams = authenticationParams;
     return this.result;
   }
