@@ -20,29 +20,34 @@ export const mockAuthenticationParams = (): AuthenticationParams => ({
   password: 'any_password'
 });
 
-export const mockAddAccount = (): AddAccount => {
-  class AddAccountStub implements AddAccount {
-    async add (account: AddAccountParams): Promise<AccountModel> {
-      return await Promise.resolve(mockAccountModel());
-    }
-  }
-  return new AddAccountStub();
-};
+export class AddAccountSpy implements AddAccount {
+  public account: AddAccountParams;
+  public result: AccountModel = mockAccountModel();
 
-export const mockAuthentication = (): Authentication => {
-  class AuthenticationStub implements Authentication {
-    async auth (authentication: AuthenticationParams): Promise<string> {
-      return await Promise.resolve('any_token');
-    }
+  async add (account: AddAccountParams): Promise<AccountModel> {
+    this.account = account;
+    return this.result;
   }
-  return new AuthenticationStub();
-};
+}
 
-export const mockLoadAccountByToken = (): LoadAccountByToken => {
-  class LoadAccountByTokenStub implements LoadAccountByToken {
-    async load (accessToken: string, role?: string): Promise<AccountModel> {
-      return mockAccountModel();
-    }
+export class AuthenticationSpy implements Authentication {
+  public authentication: AuthenticationParams;
+  public result: string = 'any_token';
+
+  async auth (authentication: AuthenticationParams): Promise<string> {
+    this.authentication = authentication;
+    return this.result;
   }
-  return new LoadAccountByTokenStub();
-};
+}
+
+export class LoadAccountByTokenSpy implements LoadAccountByToken {
+  public accessToken: string;
+  public role: string;
+  public result: AccountModel = mockAccountModel();
+
+  async load (accessToken: string, role?: string): Promise<AccountModel> {
+    this.accessToken = accessToken;
+    this.role = role;
+    return this.result;
+  }
+}

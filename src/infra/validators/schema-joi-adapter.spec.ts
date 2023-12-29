@@ -42,29 +42,29 @@ const mockJoiSchema = (): ObjectSchema => {
 
 type SutTypes = {
   sut: SchemaJoiAdapter
-  joiSchemaStub: ObjectSchema
+  joiSchemaMock: ObjectSchema
 };
 
 const makeSut = (): SutTypes => {
-  const joiSchemaStub = mockJoiSchema();
-  const sut = new SchemaJoiAdapter(joiSchemaStub);
+  const joiSchemaMock = mockJoiSchema();
+  const sut = new SchemaJoiAdapter(joiSchemaMock);
   return {
     sut,
-    joiSchemaStub
+    joiSchemaMock
   };
 };
 
 describe('SchemaJoiAdapter', () => {
   test('should call joi validate with correct values', () => {
-    const { sut, joiSchemaStub } = makeSut();
-    const validateSpy = jest.spyOn(joiSchemaStub, 'validate');
+    const { sut, joiSchemaMock } = makeSut();
+    const validateSpy = jest.spyOn(joiSchemaMock, 'validate');
     sut.validateSchema({ any_other_field: 'any_other_value' });
     expect(validateSpy).toHaveBeenCalledWith({ any_other_field: 'any_other_value' });
   });
 
   test('should return a message if joi validate fails', () => {
-    const { sut, joiSchemaStub } = makeSut();
-    jest.spyOn(joiSchemaStub, 'validate').mockReturnValueOnce({ value: {}, error: new ValidationError('"any_value" is required', [], 'original_value') });
+    const { sut, joiSchemaMock } = makeSut();
+    jest.spyOn(joiSchemaMock, 'validate').mockReturnValueOnce({ value: {}, error: new ValidationError('"any_value" is required', [], 'original_value') });
     const error = sut.validateSchema({ any_other_field: 'any_other_value' });
     expect(error).toEqual('"any_value" is required');
   });

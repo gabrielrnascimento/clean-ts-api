@@ -41,20 +41,22 @@ export const mockEmptySurveyResultModel = (): SurveyResultModel => ({
   date: new Date()
 });
 
-export const mockSaveSurveyResult = (): SaveSurveyResult => {
-  class SaveSurveyResultStub implements SaveSurveyResult {
-    async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
-      return await Promise.resolve(mockSurveyResultModel());
-    }
-  }
-  return new SaveSurveyResultStub();
-};
+export class SaveSurveyResultSpy implements SaveSurveyResult {
+  public result = mockSurveyResultModel();
+  public params: SaveSurveyResultParams;
 
-export const mockLoadSurveyResult = (): LoadSurveyResult => {
-  class LoadSurveyResultStub implements LoadSurveyResult {
-    async load (surveyId: string): Promise<SurveyResultModel> {
-      return await Promise.resolve(mockSurveyResultModel());
-    }
+  async save (params: SaveSurveyResultParams): Promise<SurveyResultModel> {
+    this.params = params;
+    return this.result;
   }
-  return new LoadSurveyResultStub();
-};
+}
+
+export class LoadSurveyResultSpy implements LoadSurveyResult {
+  public surveyId: string;
+  public result = mockSurveyResultModel();
+
+  async load (surveyId: string): Promise<SurveyResultModel> {
+    this.surveyId = surveyId;
+    return this.result;
+  }
+}

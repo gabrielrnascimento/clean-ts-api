@@ -46,29 +46,31 @@ export const mockSurveyModels = (): SurveyModel[] => {
   }];
 };
 
-export const mockAddSurvey = (): AddSurvey => {
-  class AddSurveyStub implements AddSurvey {
-    async add (data: AddSurveyParams): Promise<void> {
-      return null;
-    }
-  }
-  return new AddSurveyStub();
-};
+export class AddSurveySpy implements AddSurvey {
+  public data: AddSurveyParams;
 
-export const mockLoadSurveyById = (): LoadSurveyById => {
-  class LoadSurveyByIdStub implements LoadSurveyById {
-    async loadById (id: string): Promise<SurveyModel> {
-      return await Promise.resolve(mockSurveyModel());
-    }
+  async add (data: AddSurveyParams): Promise<void> {
+    this.data = data;
+    return null;
   }
-  return new LoadSurveyByIdStub();
-};
+}
 
-export const mockLoadSurveys = (): LoadSurveys => {
-  class LoadSurveysStub implements LoadSurveys {
-    async load (): Promise<SurveyModel[]> {
-      return await Promise.resolve(mockSurveyModels());
-    }
+export class LoadSurveyByIdSpy implements LoadSurveyById {
+  public id: string;
+  public result = mockSurveyModel();
+
+  async loadById (id: string): Promise<SurveyModel> {
+    this.id = id;
+    return this.result;
   }
-  return new LoadSurveysStub();
-};
+}
+
+export class LoadSurveysSpy implements LoadSurveys {
+  public loadCalls = 0;
+  public result = mockSurveyModels();
+
+  async load (): Promise<SurveyModel[]> {
+    this.loadCalls++;
+    return this.result;
+  }
+}

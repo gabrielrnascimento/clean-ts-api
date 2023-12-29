@@ -1,10 +1,11 @@
 import { type SchemaValidator } from '@/validation/protocols/schema-validator';
 
-export const mockSchemaValidator = (): SchemaValidator => {
-  class SchemaValidatorStub implements SchemaValidator {
-    validateSchema (field: any): string {
-      return null;
-    }
+export class SchemaValidatorSpy implements SchemaValidator {
+  public field: any;
+  public result: string = null;
+
+  validateSchema (field: any): string {
+    this.field = field;
+    return this.result;
   }
-  return new SchemaValidatorStub();
-};
+}
