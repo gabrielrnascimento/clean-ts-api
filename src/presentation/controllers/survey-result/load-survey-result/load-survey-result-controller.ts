@@ -6,14 +6,14 @@ export class LoadSurveyResultController implements Controller {
     private readonly loadSurveyResult: LoadSurveyResult
   ) { };
 
-  async handle (request: HttpRequest): Promise<HttpResponse> {
+  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const surveyId = request.params.surveyId;
+      const surveyId = httpRequest.params.surveyId;
       const survey = await this.loadSurveyById.loadById(surveyId);
       if (!survey) {
         return forbidden(new InvalidParamError('surveyId'));
       }
-      const surveyResult = await this.loadSurveyResult.load(surveyId);
+      const surveyResult = await this.loadSurveyResult.load(surveyId, httpRequest.accountId);
       return ok(surveyResult);
     } catch (error) {
       return serverError(error);

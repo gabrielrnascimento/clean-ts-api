@@ -4,6 +4,7 @@ import { LoadSurveyByIdSpy, LoadSurveyResultSpy, mockSurveyResultModel, throwErr
 import MockDate from 'mockdate';
 
 const mockRequest = (): HttpRequest => ({
+  accountId: 'any_account_id',
   params: {
     surveyId: 'any_survey_id'
   }
@@ -67,6 +68,7 @@ describe('LoadSurveyResultController', () => {
     await sut.handle(mockRequest());
 
     expect(loadSurveyResultSpy.surveyId).toBe('any_survey_id');
+    expect(loadSurveyResultSpy.accountId).toBe('any_account_id');
   });
 
   test('should return 500 if LoadSurveyResult throws', async () => {
