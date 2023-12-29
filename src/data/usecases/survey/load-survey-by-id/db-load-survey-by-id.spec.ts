@@ -31,7 +31,7 @@ describe('DbLoadSurveyById', () => {
 
     await sut.loadById('any_id');
 
-    expect(loadSurveyByIdRepositorySpy.id).toBe('any_id');
+    expect(loadSurveyByIdRepositorySpy.surveyId).toBe('any_id');
   });
 
   test('should throw if LoadSurveyByIdRepository throws', async () => {

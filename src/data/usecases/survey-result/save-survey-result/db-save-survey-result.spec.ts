@@ -34,7 +34,7 @@ describe('DbSaveSurveyResult', () => {
     const { sut, saveSurveyResultRepositorySpy } = makeSut();
     const saveSurveyResultParams = mockSaveSurveyResultParams();
     await sut.save(saveSurveyResultParams);
-    expect(saveSurveyResultRepositorySpy.data).toEqual(saveSurveyResultParams);
+    expect(saveSurveyResultRepositorySpy.saveSurveyResultParams).toEqual(saveSurveyResultParams);
   });
 
   test('should call LoadSurveyResultRepository with correct values', async () => {

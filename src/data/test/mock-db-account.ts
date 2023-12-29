@@ -5,11 +5,11 @@ import { type LoadAccountByTokenRepository } from '@/data/protocols/db/account/l
 import { type UpdateAccessTokenRepository } from '@/data/protocols/db/account/update-access-token-repository';
 
 export class AddAccountRepositorySpy implements AddAccountRepository {
-  public accountData: AddAccountParams;
+  public addAccountParams: AddAccountParams;
   public result: AccountModel = mockAccountModel();
 
-  async add (accountData: AddAccountParams): Promise<AccountModel> {
-    this.accountData = accountData;
+  async add (addAccountParams: AddAccountParams): Promise<AccountModel> {
+    this.addAccountParams = addAccountParams;
     return this.result;
   }
 }
@@ -37,11 +37,11 @@ export class LoadAccountByTokenRepositorySpy implements LoadAccountByTokenReposi
 }
 
 export class UpdateAccessTokenRepositorySpy implements UpdateAccessTokenRepository {
-  public id: string;
+  public accountId: string;
   public token: string;
 
-  async updateAccessToken (id: string, token: string): Promise<void> {
-    this.id = id;
+  async updateAccessToken (accountId: string, token: string): Promise<void> {
+    this.accountId = accountId;
     this.token = token;
     return null;
   }

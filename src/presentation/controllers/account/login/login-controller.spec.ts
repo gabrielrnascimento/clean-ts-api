@@ -35,7 +35,7 @@ describe('LoginController', () => {
 
     await sut.handle(mockRequest());
 
-    expect(authenticationSpy.authentication).toEqual({
+    expect(authenticationSpy.authenticationParams).toEqual({
       email: 'any_email@mail.com',
       password: 'any_password'
     });

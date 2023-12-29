@@ -4,10 +4,10 @@ import { type SaveSurveyResultParams, type SurveyResultModel } from '@/data/usec
 import { type LoadSurveyResultRepository } from '@/data/protocols/db/survey-result/load-survey-result-repository';
 
 export class SaveSurveyResultRepositorySpy implements SaveSurveyResultRepository {
-  public data: SaveSurveyResultParams;
+  public saveSurveyResultParams: SaveSurveyResultParams;
 
-  async save (data: SaveSurveyResultParams): Promise<null> {
-    this.data = data;
+  async save (saveSurveyResultParams: SaveSurveyResultParams): Promise<null> {
+    this.saveSurveyResultParams = saveSurveyResultParams;
     return null;
   }
 }

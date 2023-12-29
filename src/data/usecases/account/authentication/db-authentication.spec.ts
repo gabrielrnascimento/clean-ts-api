@@ -130,7 +130,7 @@ describe('DbAuthentication', () => {
 
     await sut.auth(mockAuthenticationParams());
 
-    expect(updateAccessTokenRepositorySpy.id).toBe('any_id');
+    expect(updateAccessTokenRepositorySpy.accountId).toBe('any_id');
     expect(updateAccessTokenRepositorySpy.token).toBe(encrypterSpy.result);
   });
 });

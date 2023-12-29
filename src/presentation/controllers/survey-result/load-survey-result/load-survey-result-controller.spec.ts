@@ -40,7 +40,7 @@ describe('LoadSurveyResultController', () => {
 
     await sut.handle(mockRequest());
 
-    expect(loadSurveyByIdSpy.id).toBe('any_survey_id');
+    expect(loadSurveyByIdSpy.surveyId).toBe('any_survey_id');
   });
 
   test('should return 403 if LoadSurveyById returns null', async () => {

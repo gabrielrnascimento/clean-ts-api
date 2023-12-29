@@ -52,7 +52,7 @@ describe('DbLoadSurveyResult', () => {
 
     await sut.load('any_survey_id');
 
-    expect(loadSurveyByIdRepositorySpy.id).toBe('any_survey_id');
+    expect(loadSurveyByIdRepositorySpy.surveyId).toBe('any_survey_id');
   });
 
   test('should return empty surveyResult if LoadSurveyResultRepository returns null', async () => {

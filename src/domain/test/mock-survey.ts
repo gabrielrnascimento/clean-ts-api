@@ -47,20 +47,20 @@ export const mockSurveyModels = (): SurveyModel[] => {
 };
 
 export class AddSurveySpy implements AddSurvey {
-  public data: AddSurveyParams;
+  public addSurveyParams: AddSurveyParams;
 
-  async add (data: AddSurveyParams): Promise<void> {
-    this.data = data;
+  async add (addSurveyParams: AddSurveyParams): Promise<void> {
+    this.addSurveyParams = addSurveyParams;
     return null;
   }
 }
 
 export class LoadSurveyByIdSpy implements LoadSurveyById {
-  public id: string;
+  public surveyId: string;
   public result = mockSurveyModel();
 
-  async loadById (id: string): Promise<SurveyModel> {
-    this.id = id;
+  async loadById (surveyId: string): Promise<SurveyModel> {
+    this.surveyId = surveyId;
     return this.result;
   }
 }

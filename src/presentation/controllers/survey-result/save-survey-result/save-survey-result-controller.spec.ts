@@ -45,7 +45,7 @@ describe('SaveSurveyResultController', () => {
 
     await sut.handle(mockRequest());
 
-    expect(loadSurveyByIdSpy.id).toBe('any_survey_id');
+    expect(loadSurveyByIdSpy.surveyId).toBe('any_survey_id');
   });
 
   test('should return 403 if LoadSurveyById returns null', async () => {
@@ -95,7 +95,7 @@ describe('SaveSurveyResultController', () => {
 
     await sut.handle(mockRequest());
 
-    expect(saveSurveyResultSpy.params).toEqual({
+    expect(saveSurveyResultSpy.saveSurveyResultParams).toEqual({
       surveyId: 'any_survey_id',
       accountId: 'any_account_id',
       answer: 'any_answer',

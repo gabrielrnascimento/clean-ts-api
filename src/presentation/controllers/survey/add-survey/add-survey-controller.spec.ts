@@ -67,7 +67,7 @@ describe('AddSurveyController', () => {
 
     await sut.handle(httpRequest);
 
-    expect(addSurveySpy.data).toEqual(httpRequest.body);
+    expect(addSurveySpy.addSurveyParams).toEqual(httpRequest.body);
   });
 
   test('should return 500 if AddSurvey throws', async () => {

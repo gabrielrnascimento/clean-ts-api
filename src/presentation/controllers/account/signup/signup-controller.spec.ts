@@ -38,7 +38,7 @@ describe('SignUpController', () => {
 
     await sut.handle(mockRequest());
 
-    expect(addAccountSpy.account).toEqual({
+    expect(addAccountSpy.addAccountParams).toEqual({
       name: 'any_name',
       email: 'any_email@mail.com',
       password: 'any_password'
@@ -95,7 +95,7 @@ describe('SignUpController', () => {
 
     await sut.handle(mockRequest());
 
-    expect(authenticationSpy.authentication).toEqual({
+    expect(authenticationSpy.authenticationParams).toEqual({
       email: 'any_email@mail.com',
       password: 'any_password'
     });

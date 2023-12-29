@@ -40,7 +40,7 @@ describe('DbAddAccount', () => {
   test('should call AddAccountRepository with correct values', async () => {
     const { sut, hasherSpy, addAccountRepositorySpy } = makeSut();
     await sut.add(mockAddAccountParams());
-    expect(addAccountRepositorySpy.accountData).toEqual({
+    expect(addAccountRepositorySpy.addAccountParams).toEqual({
       name: 'any_name',
       email: 'any_email@mail.com',
       password: hasherSpy.result

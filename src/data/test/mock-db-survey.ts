@@ -6,20 +6,20 @@ import { type SurveyModel } from '../usecases/survey/load-survey-by-id/db-load-s
 import { type LoadSurveysRepository } from '../protocols/db/survey/load-surveys-repository';
 
 export class AddSurveyRepositorySpy implements AddSurveyRepository {
-  public surveyData: AddSurveyParams;
+  public addSurveyParams: AddSurveyParams;
 
-  async add (surveyData: AddSurveyParams): Promise<void> {
-    this.surveyData = surveyData;
+  async add (addSurveyParams: AddSurveyParams): Promise<void> {
+    this.addSurveyParams = addSurveyParams;
     return null;
   }
 }
 
 export class LoadSurveyByIdRepositorySpy implements LoadSurveyByIdRepository {
-  public id: string;
+  public surveyId: string;
   public result: SurveyModel = mockSurveyModel();
 
-  async loadById (id: string): Promise<SurveyModel> {
-    this.id = id;
+  async loadById (surveyId: string): Promise<SurveyModel> {
+    this.surveyId = surveyId;
     return this.result;
   }
 }

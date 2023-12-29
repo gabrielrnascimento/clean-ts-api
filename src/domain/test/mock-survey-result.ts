@@ -42,11 +42,11 @@ export const mockEmptySurveyResultModel = (): SurveyResultModel => ({
 });
 
 export class SaveSurveyResultSpy implements SaveSurveyResult {
+  public saveSurveyResultParams: SaveSurveyResultParams;
   public result = mockSurveyResultModel();
-  public params: SaveSurveyResultParams;
 
-  async save (params: SaveSurveyResultParams): Promise<SurveyResultModel> {
-    this.params = params;
+  async save (saveSurveyResultParams: SaveSurveyResultParams): Promise<SurveyResultModel> {
+    this.saveSurveyResultParams = saveSurveyResultParams;
     return this.result;
   }
 }
