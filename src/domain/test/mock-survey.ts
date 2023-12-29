@@ -66,11 +66,11 @@ export class LoadSurveyByIdSpy implements LoadSurveyById {
 }
 
 export class LoadSurveysSpy implements LoadSurveys {
-  public loadCalls = 0;
+  public accountId: string;
   public result = mockSurveyModels();
 
-  async load (): Promise<SurveyModel[]> {
-    this.loadCalls++;
+  async load (accountId: string): Promise<SurveyModel[]> {
+    this.accountId = accountId;
     return this.result;
   }
 }

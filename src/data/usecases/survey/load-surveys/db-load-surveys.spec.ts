@@ -26,12 +26,13 @@ describe('DbLoadSurveys', () => {
     MockDate.reset();
   });
 
-  test('should call LoadSurveysRepository', async () => {
+  test('should call LoadSurveysRepository with correct value', async () => {
     const { sut, loadSurveysRepositorySpy } = makeSut();
+    const accountId = 'any_id';
 
-    await sut.load();
+    await sut.load(accountId);
 
-    expect(loadSurveysRepositorySpy.loadAllCalls).toBe(1);
+    expect(loadSurveysRepositorySpy.accountId).toBe(accountId);
   });
 
   test('should throw if LoadSurveysRepository throws', async () => {
@@ -39,7 +40,7 @@ describe('DbLoadSurveys', () => {
     jest.spyOn(loadSurveysRepositorySpy, 'loadAll')
       .mockImplementationOnce(throwError);
 
-    const promise = sut.load();
+    const promise = sut.load('any_id');
 
     await expect(promise).rejects.toThrow();
   });
@@ -47,7 +48,7 @@ describe('DbLoadSurveys', () => {
   test('should return a list of Surveys on success', async () => {
     const { sut } = makeSut();
 
-    const surveys = await sut.load();
+    const surveys = await sut.load('any_id');
 
     expect(surveys).toEqual(mockSurveyModels());
   });

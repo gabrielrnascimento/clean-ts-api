@@ -1,7 +1,11 @@
-import { LoadSurveysSpy, mockSurveyModels, throwError } from '@/domain/test';
 import { LoadSurveysController } from './load-surveys-controller';
-import { ok, serverError, noContent } from './load-surveys-controller-protocols';
+import { ok, serverError, noContent, type HttpRequest } from './load-surveys-controller-protocols';
+import { LoadSurveysSpy, mockSurveyModels, throwError } from '@/domain/test';
 import MockDate from 'mockdate';
+
+const mockRequest = (): HttpRequest => ({
+  accountId: 'any_id'
+});
 
 type SutTypes = {
   sut: LoadSurveysController
@@ -26,19 +30,20 @@ describe('LoadSurveysController', () => {
     MockDate.reset();
   });
 
-  test('should call LoadSurveys', async () => {
+  test('should call LoadSurveys with correct value', async () => {
     const { sut, loadSurveysSpy } = makeSut();
+    const httpRequest = mockRequest();
 
-    await sut.handle({});
+    await sut.handle(httpRequest);
 
-    expect(loadSurveysSpy.loadCalls).toBe(1);
+    expect(loadSurveysSpy.accountId).toBe(httpRequest.accountId);
   });
 
   test('should return 500 if LoadSurveys throws', async () => {
     const { sut, loadSurveysSpy } = makeSut();
     jest.spyOn(loadSurveysSpy, 'load').mockImplementationOnce(throwError);
 
-    const httpResponse = await sut.handle({});
+    const httpResponse = await sut.handle(mockRequest());
 
     expect(httpResponse).toEqual(serverError(new Error()));
   });
@@ -47,7 +52,7 @@ describe('LoadSurveysController', () => {
     const { sut, loadSurveysSpy } = makeSut();
     loadSurveysSpy.result = [];
 
-    const httpResponse = await sut.handle({});
+    const httpResponse = await sut.handle(mockRequest());
 
     expect(httpResponse).toEqual(noContent());
   });
@@ -55,7 +60,7 @@ describe('LoadSurveysController', () => {
   test('should return 200 on success', async () => {
     const { sut } = makeSut();
 
-    const httpResponse = await sut.handle({});
+    const httpResponse = await sut.handle(mockRequest());
 
     expect(httpResponse).toEqual(ok(mockSurveyModels()));
   });
