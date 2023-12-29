@@ -46,29 +46,31 @@ export const mockSurveyModels = (): SurveyModel[] => {
   }];
 };
 
-export const mockAddSurvey = (): AddSurvey => {
-  class AddSurveyStub implements AddSurvey {
-    async add (data: AddSurveyParams): Promise<void> {
-      return null;
-    }
-  }
-  return new AddSurveyStub();
-};
+export class AddSurveySpy implements AddSurvey {
+  public addSurveyParams: AddSurveyParams;
 
-export const mockLoadSurveyById = (): LoadSurveyById => {
-  class LoadSurveyByIdStub implements LoadSurveyById {
-    async loadById (id: string): Promise<SurveyModel> {
-      return await Promise.resolve(mockSurveyModel());
-    }
+  async add (addSurveyParams: AddSurveyParams): Promise<void> {
+    this.addSurveyParams = addSurveyParams;
+    return null;
   }
-  return new LoadSurveyByIdStub();
-};
+}
 
-export const mockLoadSurveys = (): LoadSurveys => {
-  class LoadSurveysStub implements LoadSurveys {
-    async load (): Promise<SurveyModel[]> {
-      return await Promise.resolve(mockSurveyModels());
-    }
+export class LoadSurveyByIdSpy implements LoadSurveyById {
+  public surveyId: string;
+  public result = mockSurveyModel();
+
+  async loadById (surveyId: string): Promise<SurveyModel> {
+    this.surveyId = surveyId;
+    return this.result;
   }
-  return new LoadSurveysStub();
-};
+}
+
+export class LoadSurveysSpy implements LoadSurveys {
+  public accountId: string;
+  public result = mockSurveyModels();
+
+  async load (accountId: string): Promise<SurveyModel[]> {
+    this.accountId = accountId;
+    return this.result;
+  }
+}

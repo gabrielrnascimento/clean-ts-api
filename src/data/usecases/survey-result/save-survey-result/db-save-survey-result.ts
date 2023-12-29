@@ -6,9 +6,12 @@ export class DbSaveSurveyResult implements SaveSurveyResult {
     private readonly loadSurveyResultRepository: LoadSurveyResultRepository
   ) {}
 
-  async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
-    await this.saveSurveyResultRepository.save(data);
-    const surveyResult = await this.loadSurveyResultRepository.loadBySurveyId(data.surveyId);
+  async save (saveSurveyResultParams: SaveSurveyResultParams): Promise<SurveyResultModel> {
+    await this.saveSurveyResultRepository.save(saveSurveyResultParams);
+    const surveyResult = await this.loadSurveyResultRepository.loadBySurveyId(
+      saveSurveyResultParams.surveyId,
+      saveSurveyResultParams.accountId
+    );
     return surveyResult;
   }
 }

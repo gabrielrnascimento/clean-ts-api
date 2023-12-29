@@ -1,29 +1,20 @@
 import { makeSignUpValidation } from './signup-validation-factory';
 import { RequiredFieldValidation, CompareFieldsValidation, EmailValidation, ValidationComposite } from '@/validation/validators';
 import { type Validation } from '@/presentation/protocols/validation';
-import { type EmailValidator } from '@/validation/protocols';
-import { mockValidation } from '@/presentation/test';
-
-const makeEmailValidator = (): EmailValidator => {
-  class EmaiLValidatorStub implements EmailValidator {
-    isValid (email: string): boolean {
-      return true;
-    }
-  }
-  return new EmaiLValidatorStub();
-};
+import { ValidationSpy } from '@/presentation/test';
+import { EmailValidatorSpy } from '@/validation/test';
 
 jest.mock('@/validation/validators/validation-composite');
 
 jest.mock('@/validation/validators/required-field-validation', () => ({
   RequiredFieldValidation: jest.fn().mockImplementation(() => {
-    return mockValidation();
+    return new ValidationSpy();
   })
 }));
 
 jest.mock('@/validation/validators/email-validation', () => ({
   EmailValidation: jest.fn().mockImplementation(() => {
-    return mockValidation();
+    return new ValidationSpy();
   })
 }));
 
@@ -35,7 +26,7 @@ describe('SignUpValidation Factory', () => {
       validations.push(new RequiredFieldValidation(field));
     }
     validations.push(new CompareFieldsValidation('password', 'passwordConfirmation'));
-    validations.push(new EmailValidation('email', makeEmailValidator()));
+    validations.push(new EmailValidation('email', new EmailValidatorSpy()));
     expect(ValidationComposite).toHaveBeenCalledWith(validations);
   });
 });

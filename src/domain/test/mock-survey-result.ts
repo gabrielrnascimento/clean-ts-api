@@ -16,11 +16,13 @@ export const mockSurveyResultModel = (): SurveyResultModel => ({
     image: 'any_image',
     answer: 'any_answer',
     count: 2,
-    percent: 20
+    percent: 20,
+    isCurrentAccountAnswer: true
   }, {
     answer: 'other_answer',
     count: 8,
-    percent: 80
+    percent: 80,
+    isCurrentAccountAnswer: false
   }],
   date: new Date()
 });
@@ -32,29 +34,35 @@ export const mockEmptySurveyResultModel = (): SurveyResultModel => ({
     image: 'any_image',
     answer: 'any_answer',
     count: 0,
-    percent: 0
+    percent: 0,
+    isCurrentAccountAnswer: false
   }, {
     answer: 'other_answer',
     count: 0,
-    percent: 0
+    percent: 0,
+    isCurrentAccountAnswer: false
   }],
   date: new Date()
 });
 
-export const mockSaveSurveyResult = (): SaveSurveyResult => {
-  class SaveSurveyResultStub implements SaveSurveyResult {
-    async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
-      return await Promise.resolve(mockSurveyResultModel());
-    }
-  }
-  return new SaveSurveyResultStub();
-};
+export class SaveSurveyResultSpy implements SaveSurveyResult {
+  public saveSurveyResultParams: SaveSurveyResultParams;
+  public result = mockSurveyResultModel();
 
-export const mockLoadSurveyResult = (): LoadSurveyResult => {
-  class LoadSurveyResultStub implements LoadSurveyResult {
-    async load (surveyId: string): Promise<SurveyResultModel> {
-      return await Promise.resolve(mockSurveyResultModel());
-    }
+  async save (saveSurveyResultParams: SaveSurveyResultParams): Promise<SurveyResultModel> {
+    this.saveSurveyResultParams = saveSurveyResultParams;
+    return this.result;
   }
-  return new LoadSurveyResultStub();
-};
+}
+
+export class LoadSurveyResultSpy implements LoadSurveyResult {
+  public surveyId: string;
+  public accountId: string;
+  public result = mockSurveyResultModel();
+
+  async load (surveyId: string, accountId: string): Promise<SurveyResultModel> {
+    this.surveyId = surveyId;
+    this.accountId = accountId;
+    return this.result;
+  }
+}
