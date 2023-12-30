@@ -1,13 +1,12 @@
 import { mockSurveyResultModel } from '../../domain/mocks';
 import { type SaveSurveyResultRepository } from '@/data/protocols/db/survey-result/save-survey-result-repository';
 import { type LoadSurveyResultRepository } from '@/data/protocols/db/survey-result/load-survey-result-repository';
-import { type SaveSurveyResultParams } from '@/domain/usecases';
 import { type SurveyResultModel } from '@/domain/models';
 
 export class SaveSurveyResultRepositorySpy implements SaveSurveyResultRepository {
-  public saveSurveyResultParams: SaveSurveyResultParams;
+  public saveSurveyResultParams: SaveSurveyResultRepository.Params;
 
-  async save (saveSurveyResultParams: SaveSurveyResultParams): Promise<null> {
+  async save (saveSurveyResultParams: SaveSurveyResultRepository.Params): Promise<void> {
     this.saveSurveyResultParams = saveSurveyResultParams;
     return null;
   }

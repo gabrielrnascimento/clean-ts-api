@@ -1,8 +1,8 @@
-import { type SaveSurveyResult, type SaveSurveyResultParams } from '@/domain/usecases/save-survey-result';
+import { type SaveSurveyResult } from '@/domain/usecases/save-survey-result';
 import { type LoadSurveyResult } from '@/domain/usecases/load-survey-result';
 import { type SurveyResultModel } from '@/domain/models';
 
-export const mockSaveSurveyResultParams = (): SaveSurveyResultParams => ({
+export const mockSaveSurveyResultParams = (): SaveSurveyResult.Params => ({
   accountId: 'any_account_id',
   surveyId: 'any_survey_id',
   answer: 'any_answer',
@@ -46,10 +46,10 @@ export const mockEmptySurveyResultModel = (): SurveyResultModel => ({
 });
 
 export class SaveSurveyResultSpy implements SaveSurveyResult {
-  public saveSurveyResultParams: SaveSurveyResultParams;
+  public saveSurveyResultParams: SaveSurveyResult.Params;
   public result = mockSurveyResultModel();
 
-  async save (saveSurveyResultParams: SaveSurveyResultParams): Promise<SurveyResultModel> {
+  async save (saveSurveyResultParams: SaveSurveyResult.Params): Promise<SurveyResultModel> {
     this.saveSurveyResultParams = saveSurveyResultParams;
     return this.result;
   }
