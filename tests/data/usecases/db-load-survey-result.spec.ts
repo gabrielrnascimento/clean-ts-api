@@ -1,5 +1,5 @@
 import { DbLoadSurveyResult } from '@/data/usecases';
-import { mockEmptySurveyResultModel, mockSurveyResultModel, throwError } from '../../domain/mocks';
+import { mockEmptySurveyResultModel, throwError } from '../../domain/mocks';
 import { LoadSurveyByIdRepositorySpy, LoadSurveyResultRepositorySpy } from '../mocks';
 import MockDate from 'mockdate';
 
@@ -66,10 +66,11 @@ describe('DbLoadSurveyResult', () => {
   });
 
   test('should return a surveyResult on success', async () => {
-    const { sut } = makeSut();
+    const { sut, loadSurveyResultRepositorySpy } = makeSut();
 
+    const { result: resultStub } = loadSurveyResultRepositorySpy;
     const surveyResult = await sut.load('any_survey_id', 'any_account_id');
 
-    expect(surveyResult).toEqual(mockSurveyResultModel());
+    expect(surveyResult).toEqual(resultStub);
   });
 });

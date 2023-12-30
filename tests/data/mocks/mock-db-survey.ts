@@ -15,9 +15,9 @@ export class AddSurveyRepositorySpy implements AddSurveyRepository {
 
 export class LoadSurveyByIdRepositorySpy implements LoadSurveyByIdRepository {
   public surveyId: string;
-  public result: SurveyModel = mockSurveyModel();
+  public result: LoadSurveyByIdRepository.Result = mockSurveyModel();
 
-  async loadById (surveyId: string): Promise<SurveyModel> {
+  async loadById (surveyId: string): Promise<LoadSurveyByIdRepository.Result> {
     this.surveyId = surveyId;
     return this.result;
   }
