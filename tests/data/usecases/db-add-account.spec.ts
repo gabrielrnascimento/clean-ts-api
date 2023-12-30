@@ -33,8 +33,8 @@ describe('DbAddAccount', () => {
   test('should throw if Hasher throws', async () => {
     const { sut, hasherSpy } = makeSut();
     jest.spyOn(hasherSpy, 'hash').mockImplementationOnce(throwError);
-    const account = sut.add(mockAddAccountParams());
-    await expect(account).rejects.toThrow();
+    const isValid = sut.add(mockAddAccountParams());
+    await expect(isValid).rejects.toThrow();
   });
 
   test('should call AddAccountRepository with correct values', async () => {
@@ -50,22 +50,22 @@ describe('DbAddAccount', () => {
   test('should throw if AddAccountRepository throws', async () => {
     const { sut, addAccountRepositorySpy } = makeSut();
     jest.spyOn(addAccountRepositorySpy, 'add').mockImplementationOnce(throwError);
-    const account = sut.add(mockAddAccountParams());
-    await expect(account).rejects.toThrow();
+    const isValid = sut.add(mockAddAccountParams());
+    await expect(isValid).rejects.toThrow();
   });
 
-  test('should return an account on success', async () => {
+  test('should return true if LoadAccountByEmailRepository returns null', async () => {
     const { sut } = makeSut();
     const accountData = {
       name: 'valid_name',
       email: 'valid_email@mail.com',
       password: 'valid_password'
     };
-    const account = await sut.add(accountData);
-    expect(account).toEqual(mockAccountModel());
+    const isValid = await sut.add(accountData);
+    expect(isValid).toBe(true);
   });
 
-  test('should null if LoadAccountByEmailRepository returns not null', async () => {
+  test('should return false if LoadAccountByEmailRepository returns an account', async () => {
     const { sut, loadAccountByEmailRepositorySpy } = makeSut();
     loadAccountByEmailRepositorySpy.result = mockAccountModel();
     const accountData = {
@@ -73,8 +73,8 @@ describe('DbAddAccount', () => {
       email: 'valid_email@mail.com',
       password: 'valid_password'
     };
-    const account = await sut.add(accountData);
-    expect(account).toBeNull();
+    const isValid = await sut.add(accountData);
+    expect(isValid).toBe(false);
   });
 
   test('should call LoadAccountByEmailRepository with correct email', async () => {

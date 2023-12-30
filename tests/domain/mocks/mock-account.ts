@@ -1,10 +1,10 @@
 import { type AccountModel } from '@/domain/models/account';
-import { type AddAccount, type AddAccountParams } from '@/domain/usecases/add-account';
+import { type AddAccount } from '@/domain/usecases/add-account';
 import { type Authentication, type AuthenticationParams } from '@/domain/usecases/authentication';
 import { type LoadAccountByToken } from '@/domain/usecases/load-account-by-token';
 import { type AuthenticationModel } from '@/domain/models/authentication';
 
-export const mockAddAccountParams = (): AddAccountParams => ({
+export const mockAddAccountParams = (): AddAccount.Params => ({
   name: 'any_name',
   email: 'any_email@mail.com',
   password: 'any_password'
@@ -27,10 +27,10 @@ export const mockAuthenticationModel = (): AuthenticationModel => ({
 });
 
 export class AddAccountSpy implements AddAccount {
-  public addAccountParams: AddAccountParams;
-  public result: AccountModel = mockAccountModel();
+  public addAccountParams: AddAccount.Params;
+  public result: AddAccount.Result = true;
 
-  async add (addAccountParams: AddAccountParams): Promise<AccountModel> {
+  async add (addAccountParams: AddAccount.Params): Promise<AddAccount.Result> {
     this.addAccountParams = addAccountParams;
     return this.result;
   }

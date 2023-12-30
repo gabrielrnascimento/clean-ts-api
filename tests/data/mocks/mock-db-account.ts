@@ -4,13 +4,12 @@ import { type AddAccountRepository } from '@/data/protocols/db/account/add-accou
 import { type LoadAccountByTokenRepository } from '@/data/protocols/db/account/load-account-by-token-repository';
 import { type UpdateAccessTokenRepository } from '@/data/protocols/db/account/update-access-token-repository';
 import { type AccountModel } from '@/domain/models/account';
-import { type AddAccountParams } from '@/domain/usecases';
 
 export class AddAccountRepositorySpy implements AddAccountRepository {
-  public addAccountParams: AddAccountParams;
+  public addAccountParams: AddAccountRepository.Params;
   public result: AccountModel = mockAccountModel();
 
-  async add (addAccountParams: AddAccountParams): Promise<AccountModel> {
+  async add (addAccountParams: AddAccountRepository.Params): Promise<AddAccountRepository.Result> {
     this.addAccountParams = addAccountParams;
     return this.result;
   }
