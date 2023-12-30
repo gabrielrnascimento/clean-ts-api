@@ -1,7 +1,7 @@
-import { type AddAccountRepository, type LoadAccountByEmailRepository, type LoadAccountByTokenRepository, type UpdateAccessTokenRepository } from '@/data/protocols/db/account';
+import { type CheckAccountByEmailRepository, type AddAccountRepository, type LoadAccountByEmailRepository, type LoadAccountByTokenRepository, type UpdateAccessTokenRepository } from '@/data/protocols/db/account';
 import { MongoHelper } from './mongo-helper';
 
-export class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository, LoadAccountByTokenRepository {
+export class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository, LoadAccountByTokenRepository, CheckAccountByEmailRepository {
   async add (accountData: AddAccountRepository.Params): Promise<AddAccountRepository.Result> {
     const accountCollection = await MongoHelper.getCollection('accounts');
     const result = await accountCollection.insertOne(accountData);
@@ -21,6 +21,19 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
     }
     );
     return account && MongoHelper.map(account);
+  }
+
+  async checkByEmail (email: string): Promise<CheckAccountByEmailRepository.Result> {
+    const accountCollection = await MongoHelper.getCollection('accounts');
+    const account = await accountCollection.findOne({
+      email
+    }, {
+      projection: {
+        _id: 1
+      }
+    }
+    );
+    return account !== null;
   }
 
   async updateAccessToken (id: any, token: string): Promise<void> {

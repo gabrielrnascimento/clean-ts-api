@@ -52,6 +52,25 @@ describe('AccountMongoRepository', () => {
     });
   });
 
+  describe('checkByEmail()', () => {
+    test('should return true on checkByEmail if email is found', async () => {
+      await accountCollection.insertOne(mockAddAccountParams());
+      const sut = makeSut();
+
+      const exists = await sut.checkByEmail('any_email@mail.com');
+
+      expect(exists).toBe(true);
+    });
+
+    test('should return false on checkByEmail if email is not found', async () => {
+      const sut = makeSut();
+
+      const exists = await sut.checkByEmail('any_email@mail.com');
+
+      expect(exists).toBe(false);
+    });
+  });
+
   describe('updateAccessToken()', () => {
     test('should update the account accessToken on updateAccessToken success', async () => {
       const sut = makeSut();

@@ -1,4 +1,4 @@
-import { type AddAccountRepository, type LoadAccountByEmailRepository, type LoadAccountByTokenRepository, type UpdateAccessTokenRepository } from '@/data/protocols/db/account';
+import { type CheckAccountByEmailRepository, type AddAccountRepository, type LoadAccountByEmailRepository, type LoadAccountByTokenRepository, type UpdateAccessTokenRepository } from '@/data/protocols/db/account';
 
 export class AddAccountRepositorySpy implements AddAccountRepository {
   public addAccountParams: AddAccountRepository.Params;
@@ -19,6 +19,16 @@ export class LoadAccountByEmailRepositorySpy implements LoadAccountByEmailReposi
   };
 
   async loadByEmail (email: string): Promise<LoadAccountByEmailRepository.Result> {
+    this.email = email;
+    return this.result;
+  }
+}
+
+export class CheckAccountByEmailRepositorySpy implements CheckAccountByEmailRepository {
+  public email: string;
+  public result: CheckAccountByEmailRepository.Result = false;
+
+  async checkByEmail (email: string): Promise<CheckAccountByEmailRepository.Result> {
     this.email = email;
     return this.result;
   }
