@@ -1,9 +1,9 @@
 import { LoadSurveyResultController } from '@/presentation/controllers';
 import { type Controller } from '@/presentation/protocols';
-import { makeDbLoadSurveyById, makeDbLoadSurveyResult } from '../usecases';
+import { makeDbCheckSurveyById, makeDbLoadSurveyResult } from '../usecases';
 import { makeLogControllerDecorator } from '../decorators';
 
 export const makeLoadSurveyResultController = (): Controller => {
-  const controller = new LoadSurveyResultController(makeDbLoadSurveyById(), makeDbLoadSurveyResult());
+  const controller = new LoadSurveyResultController(makeDbCheckSurveyById(), makeDbLoadSurveyResult());
   return makeLogControllerDecorator(controller);
 };

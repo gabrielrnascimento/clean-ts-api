@@ -1,4 +1,4 @@
-import { mockAddAccountParams, mockSurveyModels } from '../../../domain/mocks';
+import { mockAddAccountParams, mockAddSurveyParams, mockSurveyModels } from '../../../domain/mocks';
 import { MongoHelper, SurveyMongoRepository } from '@/infra/db/mongodb';
 import { ObjectId, type Collection } from 'mongodb';
 
@@ -103,6 +103,26 @@ describe('SurveyMongoRepository', () => {
       const survey = await sut.loadById(id);
       expect(survey).toBeTruthy();
       expect(survey.id).toBeTruthy();
+    });
+  });
+
+  describe('checkById()', () => {
+    test('should return true if survey exists', async () => {
+      const response = await surveyCollection.insertOne(mockAddSurveyParams());
+      const sut = makeSut();
+      const id = String(response.insertedId);
+
+      const exists = await sut.checkById(id);
+
+      expect(exists).toBe(true);
+    });
+
+    test('should return false if survey does not exist', async () => {
+      const sut = makeSut();
+
+      const exists = await sut.checkById(new ObjectId().toHexString());
+
+      expect(exists).toBe(false);
     });
   });
 });
