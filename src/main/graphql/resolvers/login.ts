@@ -1,10 +1,10 @@
+import { adaptResolver } from '@/main/adapters';
+import { makeLoginController } from '@/main/factories/controllers';
+
 export default {
   Query: {
-    login (): any {
-      return {
-        accessToken: 'any_token',
-        name: 'any_name'
-      };
+    login: async (parent: any, args: any): Promise<any> => {
+      return await adaptResolver(makeLoginController(), args);
     }
   }
 };
