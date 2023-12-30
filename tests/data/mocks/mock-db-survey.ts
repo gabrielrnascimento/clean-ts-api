@@ -1,4 +1,4 @@
-import { type CheckSurveyByIdRepository } from '@/data/protocols/db/survey';
+import { type LoadAnswersBySurveyRepository, type CheckSurveyByIdRepository } from '@/data/protocols/db/survey';
 import { mockSurveyModel, mockSurveyModels } from '../../domain/mocks';
 import { type AddSurveyRepository } from '@/data/protocols/db/survey/add-survey-repository';
 import { type LoadSurveyByIdRepository } from '@/data/protocols/db/survey/load-survey-by-id-repository';
@@ -19,6 +19,16 @@ export class LoadSurveyByIdRepositorySpy implements LoadSurveyByIdRepository {
   public result: LoadSurveyByIdRepository.Result = mockSurveyModel();
 
   async loadById (surveyId: string): Promise<LoadSurveyByIdRepository.Result> {
+    this.surveyId = surveyId;
+    return this.result;
+  }
+}
+
+export class LoadAnswersBySurveyRepositorySpy implements LoadAnswersBySurveyRepository {
+  public surveyId: string;
+  public result: LoadAnswersBySurveyRepository.Result = mockSurveyModel().answers.map(item => item.answer);
+
+  async loadAnswers (surveyId: string): Promise<LoadAnswersBySurveyRepository.Result> {
     this.surveyId = surveyId;
     return this.result;
   }

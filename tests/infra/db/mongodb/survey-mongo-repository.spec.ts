@@ -37,6 +37,7 @@ describe('SurveyMongoRepository', () => {
   describe('add()', () => {
     test('should add a survey on success', async () => {
       const sut = makeSut();
+
       await sut.add({
         question: 'any_question',
         answers: [
@@ -50,6 +51,7 @@ describe('SurveyMongoRepository', () => {
         ],
         date: new Date()
       });
+
       const survey = await surveyCollection.findOne({ question: 'any_question' });
       expect(survey).toBeTruthy();
     });
@@ -81,7 +83,9 @@ describe('SurveyMongoRepository', () => {
     test('should load an empty list', async () => {
       const accountId = await mockAccountId();
       const sut = makeSut();
+
       const surveys = await sut.loadAll(accountId);
+
       expect(surveys.length).toBe(0);
     });
   });
@@ -100,9 +104,40 @@ describe('SurveyMongoRepository', () => {
       });
       const sut = makeSut();
       const id = String(response.insertedId);
+
       const survey = await sut.loadById(id);
+
       expect(survey).toBeTruthy();
       expect(survey.id).toBeTruthy();
+    });
+
+    test('should return null if survey does not exist', async () => {
+      const sut = makeSut();
+
+      const answers = await sut.loadById(new ObjectId().toHexString());
+
+      expect(answers).toBe(null);
+    });
+  });
+
+  describe('loadAnswers()', () => {
+    test('should load answers on success', async () => {
+      const surveyData = mockAddSurveyParams();
+      const survey = await surveyCollection.insertOne(surveyData);
+      const sut = makeSut();
+      const id = String(survey.insertedId);
+
+      const answers = await sut.loadAnswers(id);
+
+      expect(answers).toEqual(surveyData.answers.map(item => item.answer));
+    });
+
+    test('should return empty arrays if survey does not exist', async () => {
+      const sut = makeSut();
+
+      const answers = await sut.loadAnswers(new ObjectId().toHexString());
+
+      expect(answers).toEqual([]);
     });
   });
 
