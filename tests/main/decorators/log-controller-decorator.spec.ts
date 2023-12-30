@@ -1,5 +1,4 @@
 import { LogErrorRepositorySpy } from '../../data/mocks';
-import { mockAccountModel } from '../../domain/mocks';
 import { ok, serverError } from '@/presentation/helpers/http-helper';
 import { type HttpResponse } from '@/presentation/protocols';
 import { ControllerSpy } from '../../presentation/mocks';
@@ -26,7 +25,7 @@ type SutTypes = {
 
 const makeSut = (): SutTypes => {
   const controllerSpy = new ControllerSpy();
-  controllerSpy.result = ok(mockAccountModel());
+  controllerSpy.result = ok('any_value');
   const logErrorRepositorySpy = new LogErrorRepositorySpy();
   const sut = new LogControllerDecorator(controllerSpy, logErrorRepositorySpy);
   return {
@@ -50,7 +49,7 @@ describe('LogControllerDecorator', () => {
 
     const httpResponse = await sut.handle(mockRequest());
 
-    expect(httpResponse).toEqual(ok(mockAccountModel()));
+    expect(httpResponse).toEqual(ok('any_value'));
   });
 
   test('should call LogErrorRepository with correct error if controller returns 500', async () => {

@@ -1,13 +1,8 @@
-import { type LoadAccountByEmailRepository } from '@/data/protocols/db/account/load-account-by-email-repository';
-import { mockAccountModel } from '../../domain/mocks';
-import { type AddAccountRepository } from '@/data/protocols/db/account/add-account-repository';
-import { type LoadAccountByTokenRepository } from '@/data/protocols/db/account/load-account-by-token-repository';
-import { type UpdateAccessTokenRepository } from '@/data/protocols/db/account/update-access-token-repository';
-import { type AccountModel } from '@/domain/models';
+import { type AddAccountRepository, type LoadAccountByEmailRepository, type LoadAccountByTokenRepository, type UpdateAccessTokenRepository } from '@/data/protocols/db/account';
 
 export class AddAccountRepositorySpy implements AddAccountRepository {
   public addAccountParams: AddAccountRepository.Params;
-  public result: AccountModel = mockAccountModel();
+  public result: AddAccountRepository.Result = true;
 
   async add (addAccountParams: AddAccountRepository.Params): Promise<AddAccountRepository.Result> {
     this.addAccountParams = addAccountParams;
@@ -17,9 +12,13 @@ export class AddAccountRepositorySpy implements AddAccountRepository {
 
 export class LoadAccountByEmailRepositorySpy implements LoadAccountByEmailRepository {
   public email: string;
-  public result: AccountModel = mockAccountModel();
+  public result: LoadAccountByEmailRepository.Result = {
+    id: 'any_id',
+    name: 'any_name',
+    password: 'any_password'
+  };
 
-  async loadByEmail (email: string): Promise<AccountModel> {
+  async loadByEmail (email: string): Promise<LoadAccountByEmailRepository.Result> {
     this.email = email;
     return this.result;
   }
@@ -28,7 +27,9 @@ export class LoadAccountByEmailRepositorySpy implements LoadAccountByEmailReposi
 export class LoadAccountByTokenRepositorySpy implements LoadAccountByTokenRepository {
   public token: string;
   public role: string;
-  public result: LoadAccountByTokenRepository.Result = mockAccountModel();
+  public result: LoadAccountByTokenRepository.Result = {
+    id: 'any_id'
+  };
 
   async loadByToken (token: string, role?: string): Promise<LoadAccountByTokenRepository.Result> {
     this.token = token;

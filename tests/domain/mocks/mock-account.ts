@@ -1,4 +1,3 @@
-import { type AccountModel } from '@/domain/models';
 import { type AddAccount, type Authentication, type LoadAccountByToken } from '@/domain/usecases';
 
 export const mockAddAccountParams = (): AddAccount.Params => ({
@@ -6,12 +5,6 @@ export const mockAddAccountParams = (): AddAccount.Params => ({
   email: 'any_email@mail.com',
   password: 'any_password'
 });
-
-export const mockAccountModel = (): AccountModel => Object.assign(
-  {},
-  mockAddAccountParams(),
-  { id: 'any_id' }
-);
 
 export const mockAuthenticationParams = (): Authentication.Params => ({
   email: 'any_email@mail.com',
@@ -46,7 +39,7 @@ export class AuthenticationSpy implements Authentication {
 export class LoadAccountByTokenSpy implements LoadAccountByToken {
   public accessToken: string;
   public role: string;
-  public result: LoadAccountByToken.Result = { id: mockAccountModel().id };
+  public result: LoadAccountByToken.Result = { id: 'any_id' };
 
   async load (accessToken: string, role?: string): Promise<LoadAccountByToken.Result> {
     this.accessToken = accessToken;
