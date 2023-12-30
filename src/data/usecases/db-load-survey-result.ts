@@ -1,7 +1,7 @@
 import { type LoadSurveyResult } from '@/domain/usecases';
 import { type LoadSurveyResultRepository } from '../protocols/db/survey-result/load-survey-result-repository';
 import { type LoadSurveyByIdRepository } from '../protocols/db/survey/load-survey-by-id-repository';
-import { type SurveyResultModel } from '@/domain/models/survey-result';
+import { type SurveyResultModel } from '@/domain/models';
 
 export class DbLoadSurveyResult implements LoadSurveyResult {
   constructor (

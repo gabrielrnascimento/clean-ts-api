@@ -1,5 +1,4 @@
-import { type AccountModel } from '@/domain/models/account';
-import { type SurveyModel } from '@/domain/models/survey';
+import { type AccountModel, type SurveyModel } from '@/domain/models';
 import { MongoHelper, SurveyResultMongoRepository } from '@/infra/db/mongodb';
 import { ObjectId, type Collection } from 'mongodb';
 

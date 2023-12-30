@@ -1,7 +1,7 @@
+import { type SurveyModel } from '@/domain/models';
 import { MongoHelper } from './mongo-helper';
 import { QueryBuilder } from './query-builder';
 import { type LoadSurveyByIdRepository, type AddSurveyRepository, type LoadSurveysRepository } from '@/data/protocols/db/survey';
-import { type SurveyModel } from '@/domain/models/survey';
 
 export class SurveyMongoRepository implements AddSurveyRepository, LoadSurveysRepository, LoadSurveyByIdRepository {
   async add (surveyData: AddSurveyRepository.Params): Promise<void> {

@@ -1,8 +1,8 @@
 import { mockSurveyModel, mockSurveyModels } from '../../domain/mocks';
-import { type SurveyModel } from '@/domain/models/survey';
 import { type AddSurveyRepository } from '@/data/protocols/db/survey/add-survey-repository';
 import { type LoadSurveyByIdRepository } from '@/data/protocols/db/survey/load-survey-by-id-repository';
 import { type LoadSurveysRepository } from '@/data/protocols/db/survey/load-surveys-repository';
+import { type SurveyModel } from '@/domain/models';
 
 export class AddSurveyRepositorySpy implements AddSurveyRepository {
   public addSurveyParams: AddSurveyRepository.Params;

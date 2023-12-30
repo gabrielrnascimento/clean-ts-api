@@ -2,7 +2,7 @@ import { mockSurveyResultModel } from '../../domain/mocks';
 import { type SaveSurveyResultRepository } from '@/data/protocols/db/survey-result/save-survey-result-repository';
 import { type LoadSurveyResultRepository } from '@/data/protocols/db/survey-result/load-survey-result-repository';
 import { type SaveSurveyResultParams } from '@/domain/usecases';
-import { type SurveyResultModel } from '@/domain/models/survey-result';
+import { type SurveyResultModel } from '@/domain/models';
 
 export class SaveSurveyResultRepositorySpy implements SaveSurveyResultRepository {
   public saveSurveyResultParams: SaveSurveyResultParams;

@@ -1,7 +1,7 @@
 import { type SaveSurveyResult, type SaveSurveyResultParams } from '@/domain/usecases';
 import { type SaveSurveyResultRepository } from '../protocols/db/survey-result/save-survey-result-repository';
 import { type LoadSurveyResultRepository } from '../protocols/db/survey-result/load-survey-result-repository';
-import { type SurveyResultModel } from '@/domain/models/survey-result';
+import { type SurveyResultModel } from '@/domain/models';
 
 export class DbSaveSurveyResult implements SaveSurveyResult {
   constructor (

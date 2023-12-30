@@ -1,10 +1,10 @@
 import { ObjectId } from 'mongodb';
 import { type LoadSurveyResultRepository } from '@/data/protocols/db/survey-result/load-survey-result-repository';
-import { type SurveyResultModel } from '@/domain/models/survey-result';
 import { type SaveSurveyResultParams } from '@/domain/usecases/save-survey-result';
 import { type SaveSurveyResultRepository } from '@/data/protocols/db/survey-result/save-survey-result-repository';
 import { MongoHelper } from './mongo-helper';
 import { QueryBuilder } from './query-builder';
+import { type SurveyResultModel } from '@/domain/models';
 
 export class SurveyResultMongoRepository implements SaveSurveyResultRepository, LoadSurveyResultRepository {
   async save (data: SaveSurveyResultParams): Promise<void> {
