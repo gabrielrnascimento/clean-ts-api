@@ -1,4 +1,4 @@
-import { type Controller, type HttpRequest, type HttpResponse } from '../protocols';
+import { type Controller, type HttpResponse } from '../protocols';
 import { forbidden, ok, serverError } from '../helpers';
 import { type SaveSurveyResult, type LoadSurveyById } from '@/domain/usecases';
 import { InvalidParamError } from '../errors';
@@ -9,11 +9,9 @@ export class SaveSurveyResultController implements Controller {
     private readonly saveSurveyResult: SaveSurveyResult
   ) {}
 
-  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+  async handle (request: SaveSurveyResultController.Request): Promise<HttpResponse> {
     try {
-      const { surveyId } = httpRequest.params;
-      const { answer } = httpRequest.body;
-      const { accountId } = httpRequest;
+      const { surveyId, accountId, answer } = request;
 
       const survey = await this.loadSurveyById.loadById(surveyId);
       if (!survey) {
@@ -35,4 +33,12 @@ export class SaveSurveyResultController implements Controller {
       return serverError(error);
     }
   }
+}
+
+export namespace SaveSurveyResultController {
+  export type Request = {
+    surveyId: string
+    answer: string
+    accountId: string
+  };
 }

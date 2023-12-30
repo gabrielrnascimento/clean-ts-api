@@ -1,15 +1,12 @@
 import { MissingParamError } from '@/presentation/errors';
 import { badRequest, ok, serverError, unauthorized } from '@/presentation/helpers/http-helper';
-import { type HttpRequest } from '@/presentation/protocols';
 import { AuthenticationSpy, throwError } from '../../domain/mocks';
 import { ValidationSpy } from '../mocks';
 import { LoginController } from '@/presentation/controllers';
 
-const mockRequest = (): HttpRequest => ({
-  body: {
-    email: 'any_email@mail.com',
-    password: 'any_password'
-  }
+const mockRequest = (): LoginController.Request => ({
+  email: 'any_email@mail.com',
+  password: 'any_password'
 });
 
 type SutTypes = {
@@ -69,11 +66,11 @@ describe('LoginController', () => {
 
   test('should call Validation with correct value', async () => {
     const { sut, validationSpy } = makeSut();
-    const httpRequest = mockRequest();
+    const request = mockRequest();
 
-    await sut.handle(httpRequest);
+    await sut.handle(request);
 
-    expect(validationSpy.input).toBe(httpRequest.body);
+    expect(validationSpy.input).toBe(request);
   });
 
   test('should return 400 if validation returns an error', async () => {

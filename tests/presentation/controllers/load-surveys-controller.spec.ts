@@ -1,10 +1,9 @@
 import { ok, serverError, noContent } from '@/presentation/helpers';
 import { LoadSurveysSpy, mockSurveyModels, throwError } from '../../domain/mocks';
 import MockDate from 'mockdate';
-import { type HttpRequest } from '@/presentation/protocols';
 import { LoadSurveysController } from '@/presentation/controllers';
 
-const mockRequest = (): HttpRequest => ({
+const mockRequest = (): LoadSurveysController.Request => ({
   accountId: 'any_id'
 });
 
@@ -33,11 +32,11 @@ describe('LoadSurveysController', () => {
 
   test('should call LoadSurveys with correct value', async () => {
     const { sut, loadSurveysSpy } = makeSut();
-    const httpRequest = mockRequest();
+    const request = mockRequest();
 
-    await sut.handle(httpRequest);
+    await sut.handle(request);
 
-    expect(loadSurveysSpy.accountId).toBe(httpRequest.accountId);
+    expect(loadSurveysSpy.accountId).toBe(request.accountId);
   });
 
   test('should return 500 if LoadSurveys throws', async () => {

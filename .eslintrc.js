@@ -13,6 +13,7 @@ module.exports = {
     '@typescript-eslint/prefer-nullish-coalescing': 'off',
     '@typescript-eslint/no-unnecessary-type-assertion': 'off',
     '@typescript-eslint/consistent-type-definitions': 'off',
-    'newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }]
+    'newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }],
+    '@typescript-eslint/no-namespace': 'off'
   }
 };

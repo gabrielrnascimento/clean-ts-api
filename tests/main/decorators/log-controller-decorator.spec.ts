@@ -1,17 +1,15 @@
 import { LogErrorRepositorySpy } from '../../data/mocks';
 import { mockAccountModel } from '../../domain/mocks';
 import { ok, serverError } from '@/presentation/helpers/http-helper';
-import { type HttpRequest, type HttpResponse } from '@/presentation/protocols';
+import { type HttpResponse } from '@/presentation/protocols';
 import { ControllerSpy } from '../../presentation/mocks';
 import { LogControllerDecorator } from '@/main/decorators';
 
-const mockRequest = (): HttpRequest => ({
-  body: {
-    name: 'any_name',
-    email: 'any_email@mail.com',
-    password: 'any_password',
-    passwordConfirmation: 'any_password'
-  }
+const mockRequest = (): any => ({
+  name: 'any_name',
+  email: 'any_email@mail.com',
+  password: 'any_password',
+  passwordConfirmation: 'any_password'
 });
 
 const mockServerError = (): HttpResponse => {
@@ -44,7 +42,7 @@ describe('LogControllerDecorator', () => {
 
     await sut.handle(mockRequest());
 
-    expect(controllerSpy.httpRequest).toEqual(mockRequest());
+    expect(controllerSpy.request).toEqual(mockRequest());
   });
 
   test('should return the same result of the controller', async () => {

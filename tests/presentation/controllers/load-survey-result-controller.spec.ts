@@ -1,15 +1,12 @@
 import { LoadSurveyByIdSpy, LoadSurveyResultSpy, mockSurveyResultModel, throwError } from '../../domain/mocks';
 import MockDate from 'mockdate';
-import { type HttpRequest } from '@/presentation/protocols';
 import { forbidden, ok, serverError } from '@/presentation/helpers';
 import { InvalidParamError } from '@/presentation/errors';
 import { LoadSurveyResultController } from '@/presentation/controllers';
 
-const mockRequest = (): HttpRequest => ({
+const mockRequest = (): LoadSurveyResultController.Request => ({
   accountId: 'any_account_id',
-  params: {
-    surveyId: 'any_survey_id'
-  }
+  surveyId: 'any_survey_id'
 });
 
 type SutTypes = {
