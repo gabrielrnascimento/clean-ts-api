@@ -1,7 +1,5 @@
 import { type AccountModel } from '@/domain/models';
-import { type AddAccount } from '@/domain/usecases/add-account';
-import { type Authentication } from '@/domain/usecases/authentication';
-import { type LoadAccountByToken } from '@/domain/usecases/load-account-by-token';
+import { type AddAccount, type Authentication, type LoadAccountByToken } from '@/domain/usecases';
 
 export const mockAddAccountParams = (): AddAccount.Params => ({
   name: 'any_name',
@@ -48,9 +46,9 @@ export class AuthenticationSpy implements Authentication {
 export class LoadAccountByTokenSpy implements LoadAccountByToken {
   public accessToken: string;
   public role: string;
-  public result: AccountModel = mockAccountModel();
+  public result: LoadAccountByToken.Result = { id: mockAccountModel().id };
 
-  async load (accessToken: string, role?: string): Promise<AccountModel> {
+  async load (accessToken: string, role?: string): Promise<LoadAccountByToken.Result> {
     this.accessToken = accessToken;
     this.role = role;
     return this.result;

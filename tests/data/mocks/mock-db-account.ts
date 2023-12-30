@@ -28,9 +28,9 @@ export class LoadAccountByEmailRepositorySpy implements LoadAccountByEmailReposi
 export class LoadAccountByTokenRepositorySpy implements LoadAccountByTokenRepository {
   public token: string;
   public role: string;
-  public result: AccountModel = mockAccountModel();
+  public result: LoadAccountByTokenRepository.Result = mockAccountModel();
 
-  async loadByToken (token: string, role?: string): Promise<AccountModel> {
+  async loadByToken (token: string, role?: string): Promise<LoadAccountByTokenRepository.Result> {
     this.token = token;
     this.role = role;
     return this.result;

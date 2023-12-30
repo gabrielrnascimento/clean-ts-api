@@ -77,7 +77,7 @@ describe('AccountMongoRepository', () => {
   });
 
   describe('loadByToken()', () => {
-    test('should return an account on loadByToken without role', async () => {
+    test('should return an account id on loadByToken without role', async () => {
       const addAccountParams = mockAddAccountParams();
       await accountCollection.insertOne({
         ...addAccountParams,
@@ -89,12 +89,9 @@ describe('AccountMongoRepository', () => {
 
       expect(account).toBeTruthy();
       expect(account.id).toBeTruthy();
-      expect(account.name).toBe('any_name');
-      expect(account.email).toBe('any_email@mail.com');
-      expect(account.password).toBe('any_password');
     });
 
-    test('should return an account on loadByToken with admin role', async () => {
+    test('should return an account id on loadByToken with admin role', async () => {
       const addAccountParams = mockAddAccountParams();
       await accountCollection.insertOne({
         ...addAccountParams,
@@ -106,9 +103,6 @@ describe('AccountMongoRepository', () => {
       const account = await sut.loadByToken('any_token', 'admin');
       expect(account).toBeTruthy();
       expect(account.id).toBeTruthy();
-      expect(account.name).toBe('any_name');
-      expect(account.email).toBe('any_email@mail.com');
-      expect(account.password).toBe('any_password');
     });
 
     test('should return null on loadByToken with invalid role', async () => {
@@ -123,7 +117,7 @@ describe('AccountMongoRepository', () => {
       expect(account).toBeFalsy();
     });
 
-    test('should return an account on loadByToken if user is admin', async () => {
+    test('should return an account id on loadByToken if user is admin', async () => {
       const addAccountParams = mockAddAccountParams();
       await accountCollection.insertOne({
         ...addAccountParams,
@@ -135,9 +129,6 @@ describe('AccountMongoRepository', () => {
       const account = await sut.loadByToken('any_token');
       expect(account).toBeTruthy();
       expect(account.id).toBeTruthy();
-      expect(account.name).toBe('any_name');
-      expect(account.email).toBe('any_email@mail.com');
-      expect(account.password).toBe('any_password');
     });
 
     test('should return null if loadByToken fails', async () => {
