@@ -1,4 +1,3 @@
-import { type AddSurveyParams } from '@/domain/usecases';
 import { mockSurveyModel, mockSurveyModels } from '../../domain/mocks';
 import { type SurveyModel } from '@/domain/models/survey';
 import { type AddSurveyRepository } from '@/data/protocols/db/survey/add-survey-repository';
@@ -6,10 +5,10 @@ import { type LoadSurveyByIdRepository } from '@/data/protocols/db/survey/load-s
 import { type LoadSurveysRepository } from '@/data/protocols/db/survey/load-surveys-repository';
 
 export class AddSurveyRepositorySpy implements AddSurveyRepository {
-  public addSurveyParams: AddSurveyParams;
+  public addSurveyParams: AddSurveyRepository.Params;
 
-  async add (addSurveyParams: AddSurveyParams): Promise<void> {
-    this.addSurveyParams = addSurveyParams;
+  async add (surveyData: AddSurveyRepository.Params): Promise<void> {
+    this.addSurveyParams = surveyData;
     return null;
   }
 }

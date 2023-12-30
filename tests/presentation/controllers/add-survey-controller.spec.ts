@@ -64,7 +64,7 @@ describe('AddSurveyController', () => {
 
     await sut.handle(request);
 
-    expect(addSurveySpy.addSurveyParams).toEqual({ ...request, date: new Date() });
+    expect(addSurveySpy.surveyData).toEqual({ ...request, date: new Date() });
   });
 
   test('should return 500 if AddSurvey throws', async () => {

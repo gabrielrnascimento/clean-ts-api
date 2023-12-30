@@ -1,9 +1,7 @@
 import { type SurveyModel } from '@/domain/models/survey';
-import { type AddSurvey, type AddSurveyParams } from '@/domain/usecases/add-survey';
-import { type LoadSurveyById } from '@/domain/usecases/load-survey-by-id';
-import { type LoadSurveys } from '@/domain/usecases/load-surveys';
+import { type AddSurvey, type LoadSurveyById, type LoadSurveys } from '@/domain/usecases';
 
-export const mockAddSurveyParams = (): AddSurveyParams => ({
+export const mockAddSurveyParams = (): AddSurvey.Params => ({
   question: 'any_question',
   answers: [{
     image: 'any_image',
@@ -47,10 +45,10 @@ export const mockSurveyModels = (): SurveyModel[] => {
 };
 
 export class AddSurveySpy implements AddSurvey {
-  public addSurveyParams: AddSurveyParams;
+  public surveyData: AddSurvey.Params;
 
-  async add (addSurveyParams: AddSurveyParams): Promise<void> {
-    this.addSurveyParams = addSurveyParams;
+  async add (surveyData: AddSurvey.Params): Promise<void> {
+    this.surveyData = surveyData;
     return null;
   }
 }
