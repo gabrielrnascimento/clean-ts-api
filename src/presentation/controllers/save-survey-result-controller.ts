@@ -1,11 +1,11 @@
 import { type Controller, type HttpResponse } from '../protocols';
 import { forbidden, ok, serverError } from '../helpers';
-import { type SaveSurveyResult, type LoadSurveyById } from '@/domain/usecases';
+import { type SaveSurveyResult, type LoadAnswersBySurvey } from '@/domain/usecases';
 import { InvalidParamError } from '../errors';
 
 export class SaveSurveyResultController implements Controller {
   constructor (
-    private readonly loadSurveyById: LoadSurveyById,
+    private readonly loadAnswersBySurvey: LoadAnswersBySurvey,
     private readonly saveSurveyResult: SaveSurveyResult
   ) {}
 
@@ -13,12 +13,11 @@ export class SaveSurveyResultController implements Controller {
     try {
       const { surveyId, accountId, answer } = request;
 
-      const survey = await this.loadSurveyById.loadById(surveyId);
-      if (!survey) {
+      const answers = await this.loadAnswersBySurvey.loadAnswers(surveyId);
+      if (!answers.length) {
         return forbidden(new InvalidParamError('surveyId'));
       }
 
-      const answers = survey.answers.map(answer => answer.answer);
       if (!answers.includes(answer)) return forbidden(new InvalidParamError('answer'));
 
       const surveyResult = await this.saveSurveyResult.save({
