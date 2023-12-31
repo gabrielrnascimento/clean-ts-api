@@ -35,7 +35,7 @@ export class SignUpController implements Controller {
 
       return ok(authenticationModel);
     } catch (error) {
-      return serverError(error instanceof Error ? error : new Error(String(error)));
+      return serverError(error as Error);
     }
   }
 }
