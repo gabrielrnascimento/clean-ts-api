@@ -1,4 +1,3 @@
-
 import { makeAuthMiddleware } from '@/main/factories/middlewares';
 import { getDirective, MapperKind, mapSchema } from '@graphql-tools/utils';
 import { ForbiddenError } from 'apollo-server-express';
@@ -19,7 +18,7 @@ export const authDirectiveTransformer = (schema: GraphQLSchema): GraphQLSchema =
             Object.assign(context?.req, httpResponse.body);
             return resolve.call(this, parent, args, context, info);
           } else {
-            throw new ForbiddenError(httpResponse.body.message);
+            throw new ForbiddenError(httpResponse.body.message as string);
           }
         };
       }

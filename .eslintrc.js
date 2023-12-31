@@ -1,7 +1,8 @@
 module.exports = {
   extends: 'standard-with-typescript',
   parserOptions: {
-    project: './tsconfig.json'
+    project: './tsconfig.json',
+    createDefaultProgram: true
   },
   rules: {
     semi: ['off'],
@@ -15,5 +16,13 @@ module.exports = {
     '@typescript-eslint/consistent-type-definitions': 'off',
     'newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }],
     '@typescript-eslint/no-namespace': 'off'
-  }
+  },
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      rules: {
+        // TypeScript-specific rules can go here
+      }
+    }
+  ]
 };

@@ -7,6 +7,11 @@ import { type Express } from 'express';
 import { type GraphQLError } from 'graphql';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 
+type CustomResponse = {
+  response: any
+  errors: readonly GraphQLError[]
+};
+
 const handleErrors = (response: any, errors: readonly GraphQLError[]): void => {
   errors?.forEach((error: GraphQLError) => {
     response.data = undefined;
@@ -38,7 +43,7 @@ export default async (app: Express): Promise<void> => {
     context: ({ req }) => ({ req }),
     plugins: [{
       requestDidStart: (): any => ({
-        willSendResponse: ({ response, errors }: any) => {
+        willSendResponse: ({ response, errors }: CustomResponse) => {
           handleErrors(response, errors);
         }
       })

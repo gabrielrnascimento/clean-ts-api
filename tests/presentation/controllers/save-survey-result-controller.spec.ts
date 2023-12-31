@@ -1,4 +1,3 @@
-
 import { LoadAnswersBySurveySpy, SaveSurveyResultSpy, mockSurveyResultModel, throwError } from '../../domain/mocks';
 import { forbidden, serverError, ok } from '@/presentation/helpers';
 import { InvalidParamError } from '@/presentation/errors';

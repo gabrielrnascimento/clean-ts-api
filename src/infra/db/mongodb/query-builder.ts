@@ -1,42 +1,42 @@
 export class QueryBuilder {
   private readonly query: any[] = [];
 
-  match (data: object): QueryBuilder {
+  match (data: object): this {
     this.query.push({
       $match: data
     });
     return this;
   }
 
-  group (data: object): QueryBuilder {
+  group (data: object): this {
     this.query.push({
       $group: data
     });
     return this;
   }
 
-  sort (data: object): QueryBuilder {
+  sort (data: object): this {
     this.query.push({
       $sort: data
     });
     return this;
   }
 
-  unwind (data: object): QueryBuilder {
+  unwind (data: object): this {
     this.query.push({
       $unwind: data
     });
     return this;
   }
 
-  lookup (data: object): QueryBuilder {
+  lookup (data: object): this {
     this.query.push({
       $lookup: data
     });
     return this;
   }
 
-  project (data: object): QueryBuilder {
+  project (data: object): this {
     this.query.push({
       $project: data
     });

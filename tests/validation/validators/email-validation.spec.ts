@@ -36,9 +36,9 @@ describe('EmailValidation', () => {
 
   test('should throw if EmailValidator throws', () => {
     const { sut, emailValidatorSpy } = makeSut();
-
     jest.spyOn(emailValidatorSpy, 'isValid').mockImplementationOnce(throwError);
+    const validate = sut.validate.bind(sut);
 
-    expect(sut.validate).toThrow();
+    expect(validate).toThrow();
   });
 });

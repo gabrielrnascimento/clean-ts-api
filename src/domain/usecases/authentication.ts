@@ -1,4 +1,3 @@
-
 export interface Authentication {
   auth: (authenticationParams: Authentication.Params) => Promise<Authentication.Result>
 }
