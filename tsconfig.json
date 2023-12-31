@@ -6,13 +6,13 @@
         "esModuleInterop": true,
         "noImplicitAny": true,
         "sourceMap": true,
-        "rootDir": "src",
         "baseUrl": "src",
         "paths": {
             "@/*": ["*"],
         },
     },
     "include": [
-        "src/**/*"
+        "src/**/*",
+        "tests/**/*",
     ],
 }
