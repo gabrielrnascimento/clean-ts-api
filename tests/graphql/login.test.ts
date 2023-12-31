@@ -61,5 +61,17 @@ describe('Login GraphQL', () => {
       expect(res.body.data).toBeFalsy();
       expect(res.body.errors[0].message).toBe('Unauthorized');
     });
+
+    test('should return InvalidParamError on invalid data', async () => {
+      const res = await request(app)
+        .post('/graphql')
+        .send({
+          query: generateQuery('invalid_email', password)
+        });
+
+      expect(res.status).toBe(400);
+      expect(res.body.data).toBeFalsy();
+      expect(res.body.errors[0].message).toBe('Invalid param: email');
+    });
   });
 });
