@@ -10,7 +10,7 @@ export class LoadSurveysController implements Controller {
       const surveys = await this.loadSurveys.load(request.accountId);
       return surveys.length ? ok(surveys) : noContent();
     } catch (error) {
-      return serverError(error);
+      return serverError(error instanceof Error ? error : new Error(String(error)));
     }
   }
 }

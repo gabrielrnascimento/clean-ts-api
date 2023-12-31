@@ -29,7 +29,7 @@ export class SaveSurveyResultController implements Controller {
 
       return ok(surveyResult);
     } catch (error) {
-      return serverError(error);
+      return serverError(error instanceof Error ? error : new Error(String(error)));
     }
   }
 }

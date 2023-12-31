@@ -46,8 +46,9 @@ describe('SchemaValidation', () => {
   test('should throw if SchemaValidator throws', () => {
     const { sut, schemaValidatorSpy } = makeSut();
     jest.spyOn(schemaValidatorSpy, 'validateSchema').mockImplementationOnce(throwError);
+    const validate = sut.validate.bind(sut);
 
-    expect(sut.validate).toThrow();
+    expect(validate).toThrow();
   });
 
   test('should return null if SchemaValidator returns true', () => {
