@@ -19,7 +19,7 @@ export class LoadSurveyResultController implements Controller {
       const surveyResult = await this.loadSurveyResult.load(surveyId, request.accountId);
       return ok(surveyResult);
     } catch (error) {
-      return serverError(error instanceof Error ? error : new Error(String(error)));
+      return serverError(error as Error);
     }
   }
 }

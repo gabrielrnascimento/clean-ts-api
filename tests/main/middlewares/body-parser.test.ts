@@ -1,7 +1,14 @@
 import request from 'supertest';
-import app from '@/main/config/app';
+import { setupApp } from '@/main/config/app';
+import { type Express } from 'express';
+
+let app: Express;
 
 describe('BodyParserMiddleware', () => {
+  beforeAll(async () => {
+    app = await setupApp();
+  });
+
   test('should parse body as json', async () => {
     app.post('/test_body_parser', (req, res) => {
       res.send(req.body);

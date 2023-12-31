@@ -1,9 +1,8 @@
-import typeDefs from '../graphql/type-defs';
-import resolvers from '../graphql/resolvers';
-import { authDirectiveTransformer } from '../graphql/directives';
+import typeDefs from '../type-defs';
+import resolvers from '../resolvers';
+import { authDirectiveTransformer } from '../directives';
 
 import { ApolloServer } from 'apollo-server-express';
-import { type Express } from 'express';
 import { type GraphQLError } from 'graphql';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 
@@ -37,18 +36,14 @@ const checkError = (error: GraphQLError, errorName: string): boolean => {
 let schema = makeExecutableSchema({ resolvers, typeDefs });
 schema = authDirectiveTransformer(schema);
 
-export default async (app: Express): Promise<void> => {
-  const server = new ApolloServer({
-    schema,
-    context: ({ req }) => ({ req }),
-    plugins: [{
-      requestDidStart: (): any => ({
-        willSendResponse: ({ response, errors }: CustomResponse) => {
-          handleErrors(response, errors);
-        }
-      })
-    }]
-  });
-  await server.start();
-  server.applyMiddleware({ app });
-};
+export const setupApolloServer = (): ApolloServer => new ApolloServer({
+  schema,
+  context: ({ req }) => ({ req }),
+  plugins: [{
+    requestDidStart: (): any => ({
+      willSendResponse: ({ response, errors }: CustomResponse) => {
+        handleErrors(response, errors);
+      }
+    })
+  }]
+});
