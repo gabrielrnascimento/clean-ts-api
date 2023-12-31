@@ -74,4 +74,30 @@ describe('Login GraphQL', () => {
       expect(res.body.errors[0].message).toBe('Invalid param: email');
     });
   });
+
+  describe('SignUp Mutation', () => {
+    const generateMutation = (name: string, email: string, password: string, passwordConfirmation: string): string => `
+      mutation {
+        signup (name: "${name}", email: "${email}", password: "${password}", passwordConfirmation: "${passwordConfirmation}") {
+          accessToken
+          name
+          }
+        }`;
+
+    const email = 'gabriel@mail.com';
+    const password = '123';
+    const name = 'Gabriel';
+
+    const query = generateMutation(name, email, password, password);
+
+    test('should return an account on valid data', async () => {
+      const res = await request(app)
+        .post('/graphql')
+        .send({ query });
+
+      expect(res.status).toBe(200);
+      expect(res.body.data.signup.accessToken).toBeTruthy();
+      expect(res.body.data.signup.name).toBe(name);
+    });
+  });
 });
