@@ -3,14 +3,14 @@ import { makeLoadSurveyResultController, makeSaveSurveyResultController } from '
 
 export default {
   Query: {
-    surveyResult: async (parent: any, args: any): Promise<any> => {
-      return await adaptResolver(makeLoadSurveyResultController(), args);
+    surveyResult: async (parent: any, args: any, context: any): Promise<any> => {
+      return await adaptResolver(makeLoadSurveyResultController(), args, context);
     }
   },
 
   Mutation: {
-    saveSurveyResult: async (parent: any, args: any): Promise<any> => {
-      return await adaptResolver(makeSaveSurveyResultController(), args);
+    saveSurveyResult: async (parent: any, args: any, context: any): Promise<any> => {
+      return await adaptResolver(makeSaveSurveyResultController(), args, context);
     }
   }
 };

@@ -116,4 +116,63 @@ describe('SurveyResult GraphQL', () => {
       expect(res.body.errors[0].message).toBe('Access denied');
     });
   });
+
+  describe('SaveSurveyResult Mutation', () => {
+    const surveyData = {
+      question: 'Question 1',
+      answers: [
+        {
+          image: 'http://image-name.com',
+          answer: 'Answer 1'
+        },
+        {
+          answer: 'Answer 2'
+        }
+      ],
+      date: new Date()
+    };
+
+    const generateQuery = (surveyId: string, answer: string): string => `
+      mutation {
+        saveSurveyResult (surveyId: "${surveyId}", answer: "${answer}") {
+          question
+          answers {
+            answer
+            count
+            percent
+            isCurrentAccountAnswer
+          }
+          date
+        }
+      }`;
+
+    test('should return survey result on success', async () => {
+      const accessToken = await mockAccessToken();
+      const insertedDocument = await surveyCollection.insertOne(surveyData);
+      const query = generateQuery(insertedDocument.insertedId.toString(), surveyData.answers[0].answer);
+
+      const res = await request(app)
+        .post('/graphql')
+        .set('x-access-token', accessToken)
+        .send({ query });
+
+      expect(res.status).toBe(200);
+      expect(res.body.data.saveSurveyResult.question).toBe(surveyData.question);
+      expect(res.body.data.saveSurveyResult.date).toBe(surveyData.date.toISOString());
+      expect(res.body.data.saveSurveyResult.answers).toEqual([
+        {
+          answer: surveyData.answers[0].answer,
+          count: 1,
+          percent: 100,
+          isCurrentAccountAnswer: true
+        },
+        {
+          answer: surveyData.answers[1].answer,
+          count: 0,
+          percent: 0,
+          isCurrentAccountAnswer: false
+        }
+      ]);
+    });
+  });
 });
